@@ -1,0 +1,9 @@
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.exe.config
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.exe
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.pdb
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.csprojResolveAssemblyReference.cache
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced_File_Search.Properties.Resources.resources
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.csproj.GenerateResource.Cache
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.exe
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.pdb
+c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced_File_Search.SearchConsole.resources
