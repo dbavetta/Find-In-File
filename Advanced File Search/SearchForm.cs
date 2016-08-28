@@ -36,6 +36,9 @@ namespace Advanced_File_Search
             InitializeFindComponents();
             InitilizeListView();
 
+            //create event listener and pass it to searchengine object
+            Form form = new Form();
+
 #if RELEASE
             findButton.Enabled = false;
 #endif
@@ -73,49 +76,6 @@ namespace Advanced_File_Search
             lineTextColumnWidth = queryResultsListView.Columns[2].Width;
         }
 
-        // Single threaded (deprecated)
-        private void Search()
-        {
-            queryResultsListView.Items.Clear();
-
-            bool noMatchesFound = false;
-            //string filter = "*.ps1";//, *.psd1, *.psm1, *.cs, *.cshtml, *.txt";
-            string[] filter = filterTextBox.Text.Replace(" ", "").Split(',');
-
-            foreach (var ext in filter)
-            {
-                try
-                {
-                    //Get all files in directory/Sub-directories
-                    IEnumerable<string> filePaths = Directory.EnumerateFiles(rootDirectoryTextBox.Text, ext, SearchOption.AllDirectories);
-
-                    //Search each file for string
-                    foreach (var path in filePaths)
-                    {
-                        FindMatchesInFile(path);
-
-                        searchResultStatusStrip.Text = "..." + path.Substring(rootDirectoryTextBox.Text.Length);
-                        statusStrip.Refresh(); //refresh control so strings will render to the form while looping
-                    }
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    noMatchesFound = true;
-                }
-            }
-
-            if (noMatchesFound)
-            {
-                searchResultStatusStrip.ForeColor = Color.Red;
-                searchResultStatusStrip.Text = "No results found.";
-            }
-            else
-            {
-                searchResultStatusStrip.ForeColor = Color.Green;
-                searchResultStatusStrip.Text = queryResultsListView.Items.Count + " matches found.";
-            }
-        }
-
         private void AddRowItemToListView(Match match)
         {
             ListViewItem item = new ListViewItem(match.GetRow());
@@ -134,67 +94,6 @@ namespace Advanced_File_Search
 
             if (queryResultsListView.Columns[2].Width < lineTextColumnWidth)
                 queryResultsListView.AutoResizeColumn(2, ColumnHeaderAutoResizeStyle.HeaderSize);
-        }
-
-        void SearchFileSet(IEnumerable<string> files)
-        {
-            files.AsParallel().ForAll(currentFile => {
-
-                List<Match> matches = FindMatchesInFile(currentFile);
-
-                if (matches != null)
-                {
-                    foreach (var match in matches)
-                        m_MatchList.Add(match);
-                }
-
-                //TODO: Causes application to hang -> fix
-                //string text = "..." + currentFile.Substring(rootDirectoryTextBox.Text.Length);
-                //ThreadSafeOperations.ActionBlock(statusStrip, () => UpdateStatusStrip(text, Color.DarkOrange, true));
-            });
-
-#if DEBUG
-            debuggerDataStatusStrip.DropDownItems.Add("Match Count: " + m_MatchList.Count);
-#endif
-        }
-
-        private List<Match> FindMatchesInFile(string filePath)
-        {
-            bool fuzzySearch = fuzzySearchCheckBox.Checked;
-            bool matchCase = matchCaseCheckBox.Checked;
-            string stringToFind = queryTextBox.Text;
-
-            if (!fuzzySearch)
-            {
-                return File.ReadLines(filePath)
-                .Select((text, index) => new Match(filePath, text, index + 1))
-                          .Where(line => 
-                              matchCase ? 
-                                Regex.IsMatch(line.text, @"(^|\s)" + stringToFind + @"(\s|$)") : 
-                                Regex.IsMatch(line.text, @"(^|\s)" + stringToFind + @"(\s|$)", RegexOptions.IgnoreCase)).ToList();
-            }
-            else
-            {
-                return File.ReadLines(filePath)
-                    .Select((text, index) => new Match(filePath, text, index + 1))
-                              .Where(line => line.text.Contains(queryTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-        }
-
-        private void UpdateStatusStrip(string text, Color? color = null, bool forceRefresh = false)
-        {
-            searchResultStatusStrip.ForeColor = color ?? Color.Green; //Set defualt color
-            searchResultStatusStrip.Text = text;
-
-            if (forceRefresh)
-                statusStrip.Refresh();
-        }
-
-        private IEnumerable<string> GetAllFilesInDirectory(string rootPath, Regex filter, bool includeSubDirectories = true)
-        {
-            return Directory.EnumerateFiles(rootPath, "*",
-                includeSubDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-                        .Where(file => filter.IsMatch(Path.GetExtension(file)));
         }
 
         private void OnFindButton_Click(object sender, EventArgs e) 
@@ -305,16 +204,6 @@ namespace Advanced_File_Search
 
                 e.DrawText(flags);
             }
-        }
-
-        //Depricated, Ui too slow to update
-        private void OnQueryResultsListView_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-        {
-            if (lastHighlightedRow != null)
-                lastHighlightedRow.BackColor = Color.White;
-
-            e.Item.BackColor = Color.AliceBlue;
-            lastHighlightedRow = e.Item;
         }
     }
 }

@@ -279,27 +279,27 @@ namespace Advanced_File_Search
 
         #endregion
 
-        private System.Windows.Forms.Label findWhatLabel;
-        private System.Windows.Forms.Label rootDirectoryLabel;
-        private System.Windows.Forms.Button findButton;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.Button browseButton;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel searchResultStatusStrip;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ToolStripDropDownButton debuggerDataStatusStrip;
+        private Label findWhatLabel;
+        private Label rootDirectoryLabel;
+        private Button findButton;
+        private FolderBrowserDialog folderBrowserDialog;
+        private Button browseButton;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
 
         // Public controls to be used with the SearchEngine class
-        public System.Windows.Forms.TextBox queryTextBox;
-        public System.Windows.Forms.TextBox rootDirectoryTextBox;
-        public System.Windows.Forms.ListView queryResultsListView;
-        public System.Windows.Forms.CheckBox recursiveCheckBox;
-        public System.Windows.Forms.TextBox filterTextBox;
-        public System.Windows.Forms.CheckBox fuzzySearchCheckBox;
-        public System.Windows.Forms.CheckBox matchCaseCheckBox;
-        public System.Windows.Forms.CheckBox copyToClipboardCheckBox;
+        public TextBox queryTextBox;
+        public TextBox rootDirectoryTextBox;
+        public ListView queryResultsListView;
+        public CheckBox recursiveCheckBox;
+        public TextBox filterTextBox;
+        public CheckBox fuzzySearchCheckBox;
+        public CheckBox matchCaseCheckBox;
+        public CheckBox copyToClipboardCheckBox;
+        public StatusStrip statusStrip;
+        public ToolStripStatusLabel searchResultStatusStrip;
+        public ToolStripDropDownButton debuggerDataStatusStrip;
     }
 }
 
