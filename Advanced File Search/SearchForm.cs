@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -12,7 +10,12 @@ namespace Advanced_File_Search
 {
     public partial class SearchForm : Form
     {
-        private ConcurrentBag<Match> m_MatchList;
+        private SearchEngine m_SearchEngine = null;
+
+        private List<Match> m_MatchList = null;
+
+        private ListViewItem lastHighlightedRow = null;
+
         private string DEFAULT_QUERY = "Get-EmpiEnvironment";
         private string DEFAULT_FILE_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private string DEFAULT_FILTER = "*.ps1, *.psd1, *.psm1, *.cs, *.cshtml, *.html, *.txt, *.js";
@@ -21,28 +24,21 @@ namespace Advanced_File_Search
         private int lineNumberColumnWidth;
         private int lineTextColumnWidth;
 
-
-
-        ListViewItem lastHighlightedRow = null;
-
         public SearchForm()
         {
             //TODO: Convert to WPF application instead of windows forms
             //TODO: Autoscale and position controls relative to GUI size 
             //TODO: Dynamically generate checkboxs for every file type found in directy path -> allow the user to check additional search filters
-            //TODO: Copy search query to clipboard after clicking Find button
+            //TODO: Create event listener if needed still
+            //TODO: Change Search Engine class to use static methods and remove constructor
+            //TODO: Investigate SearchExtensions method for performance reasons and transition to use Regex.IsMatch instead of IndexOf
 
             InitializeComponent();
             InitializeFindComponents();
             InitilizeListView();
 
-            //create event listener and pass it to searchengine object
-            Form form = new Form();
-
-#if RELEASE
-            findButton.Enabled = false;
-#endif
-            m_MatchList = new ConcurrentBag<Match>();
+            m_SearchEngine = new SearchEngine();
+            m_MatchList = new List<Match>();
         }
 
         private void InitializeFindComponents()
@@ -50,7 +46,9 @@ namespace Advanced_File_Search
             queryTextBox.Text = DEFAULT_QUERY;
             rootDirectoryTextBox.Text = DEFAULT_FILE_PATH;
             filterTextBox.Text = DEFAULT_FILTER;
-            findButton.Enabled = true;
+
+            if(!string.IsNullOrEmpty(queryTextBox.Text))
+                findButton.Enabled = true;
         }
 
         private void InitilizeListView()
@@ -96,9 +94,18 @@ namespace Advanced_File_Search
                 queryResultsListView.AutoResizeColumn(2, ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
+        private void UpdateStatusStrip(string text, Color? color = null, bool forceRefresh = false)
+        {
+            searchResultStatusStrip.ForeColor = color ?? Color.Green; //Set defualt color
+            searchResultStatusStrip.Text = text;
+
+            if (forceRefresh)
+                statusStrip.Refresh();
+        }
+
         private void OnFindButton_Click(object sender, EventArgs e) 
         {
-            m_MatchList = new ConcurrentBag<Match>();
+            m_MatchList.Clear();
             queryResultsListView.Items.Clear();
 
             //Convert the users filter query to regex ~ needed for search
@@ -106,22 +113,22 @@ namespace Advanced_File_Search
             string searchPatternExpression = filterTextBox.Text.Replace(",", "|").Replace("*", @"\").Replace(" ", "");
             Regex searchPattern = new Regex(searchPatternExpression, RegexOptions.IgnoreCase);
 
+            string query = queryTextBox.Text;
             string rootPath = rootDirectoryTextBox.Text;
             bool recursive = recursiveCheckBox.Checked;
             bool fuzzySearch = fuzzySearchCheckBox.Checked;
-
-            Clipboard.SetText(queryTextBox.Text); //copy searched for text to system clipboard
+            bool matchCase = matchCaseCheckBox.Checked;
 
             try
             {
                 UpdateStatusStrip("Searching...", Color.DarkOrange, true);
-                IEnumerable<string> files = GetAllFilesInDirectory(rootPath, searchPattern, recursive);
+                IEnumerable<string> files = m_SearchEngine.GetAllFilesInDirectory(rootPath, searchPattern, recursive);
 #if DEBUG
                 debuggerDataStatusStrip.DropDownItems.Clear();
                 debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + files.Count());
 #endif
 
-                SearchFileSet(files);
+                m_MatchList = m_SearchEngine.SearchFileSet(query, files, fuzzySearch, matchCase);
             }
             catch (DirectoryNotFoundException)
             {
@@ -170,7 +177,7 @@ namespace Advanced_File_Search
                 rootDirectoryTextBox.Text = folderBrowserDialog.SelectedPath;
         }
 
-        //TODO: Finish implementing DrawSubItem Event Handler
+        //TODO: [DEPRICATED] Finish implementing DrawSubItem Event Handler
         private void OnQueryResultsListView_DrawItem(object sender, DrawListViewSubItemEventArgs e)
         {
             using (StringFormat sf = new StringFormat())

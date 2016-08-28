@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Advanced_File_Search
+﻿namespace Advanced_File_Search
 {
-    class Match
+    public class Match
     {
         public string path;
         public string text;
