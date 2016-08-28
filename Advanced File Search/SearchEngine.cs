@@ -1,110 +1,88 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Advanced_File_Search
 {
     public class SearchEngine
     {
-        
-        private SearchForm m_Form;
-
         private ConcurrentBag<Match> m_MatchList;
-        
-        private string m_SearchQuery;
-        private string m_FilePath;
-        private string m_SearchFilter;
 
-        private bool m_RecursiveSearch;
-        private bool m_FuzzySearch;
-        private bool m_MatchCase;
-        private bool m_CopyToClipboard;
-
-        public SearchEngine(SearchForm form)
+        public SearchEngine() //EventListener listener
         {
-            //add ewvent listener as parameter
+            //add event listener as parameter
             // Initialize 
-            this.m_Form = form;
 
-            UpdateEngineData();
+            m_MatchList = new ConcurrentBag<Match>();
         }
 
-        private void UpdateEngineData()
+        public List<Match> SearchFileSet(string query, IEnumerable<string> files, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false)
         {
-            // Find components
-            m_SearchQuery = m_Form.queryTextBox.Text;
-            m_FilePath = m_Form.rootDirectoryTextBox.Text;
-            m_SearchFilter = m_Form.filterTextBox.Text;
-
-            // Find options
-            m_RecursiveSearch = m_Form.recursiveCheckBox.Checked;
-            m_FuzzySearch = m_Form.fuzzySearchCheckBox.Checked;
-            m_MatchCase = m_Form.matchCaseCheckBox.Checked;
-            m_CopyToClipboard = m_Form.copyToClipboardCheckBox.Checked;
-        }
-
-        public void SearchFileSet(IEnumerable<string> files)
-        {
-            UpdateEngineData();
+            if (!m_MatchList.IsEmpty)
+                m_MatchList = new ConcurrentBag<Match>();
 
             files.AsParallel().ForAll(currentFile => {
 
-                List<Match> matches = FindMatchesInFile(currentFile);
-
-                if (matches != null)
-                {
-                    foreach (var match in matches)
-                        m_MatchList.Add(match);
-                }
+                SearchFile(query, currentFile, fuzzySearch, matchCase, copyToClipboard);
             });
 
-#if DEBUG
-            m_Form.debuggerDataStatusStrip.DropDownItems.Add("Match Count: " + m_MatchList.Count());
-#endif
+            return m_MatchList.ToList();
         }
 
-        private List<Match> FindMatchesInFile(string filePath)
+        public List<Match> SearchFile(string query, string filePath, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false)
         {
-            if (!m_FuzzySearch)
+            if(!m_MatchList.IsEmpty)
+                m_MatchList = new ConcurrentBag<Match>();
+
+            List<Match> matches = FindMatchesInFile(query, filePath, fuzzySearch, matchCase);
+
+            if (matches != null)
+            {
+                foreach (var match in matches)
+                    m_MatchList.Add(match);
+
+                // Copy searched for text to system clipboard
+                if (copyToClipboard)
+                    Clipboard.SetText(query);
+            }
+
+            return m_MatchList.ToList();
+        }
+
+        public IEnumerable<string> GetAllFilesInDirectory(string rootPath, Regex filter, bool recursive = false)
+        {
+            return Directory.EnumerateFiles(rootPath, "*",
+                recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+                        .Where(file => filter.IsMatch(Path.GetExtension(file)));
+        }
+
+        private List<Match> FindMatchesInFile(string filePath, string searchQuery, bool fuzzySearch, bool matchCase)
+        {
+            if (!fuzzySearch)
             {
                 return File.ReadLines(filePath)
                 .Select((text, index) => new Match(filePath, text, index + 1))
                           .Where(line =>
-                              m_MatchCase ?
-                                Regex.IsMatch(line.text, @"(^|\s)" + m_SearchQuery + @"(\s|$)") :
-                                Regex.IsMatch(line.text, @"(^|\s)" + m_SearchQuery + @"(\s|$)", RegexOptions.IgnoreCase)).ToList();
+                              matchCase ?
+                                Regex.IsMatch(line.text, @"(^|\s)" + searchQuery + @"(\s|$)") :
+                                Regex.IsMatch(line.text, @"(^|\s)" + searchQuery + @"(\s|$)", RegexOptions.IgnoreCase)).ToList();
             }
             else
             {
                 return File.ReadLines(filePath)
                     .Select((text, index) => new Match(filePath, text, index + 1))
-                              .Where(line => line.text.Contains(m_SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                              .Where(line => 
+                                  matchCase ?
+                                    line.text.Contains(searchQuery, StringComparison.Ordinal) :
+                                    line.text.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
             }
         }
 
-        private IEnumerable<string> GetAllFilesInDirectory(string rootPath, Regex filter)
-        {
-            return Directory.EnumerateFiles(rootPath, "*",
-                m_RecursiveSearch ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-                        .Where(file => filter.IsMatch(Path.GetExtension(file)));
-        }
-
         #region Utility Methods
-        private void UpdateStatusStrip(string text, Color? color = null, bool forceRefresh = false)
-        {
-            m_Form.searchResultStatusStrip.ForeColor = color ?? Color.Green; //Set defualt color
-            m_Form.searchResultStatusStrip.Text = text;
-
-            if (forceRefresh)
-                m_Form.statusStrip.Refresh();
-        }
         #endregion
     }
 }
