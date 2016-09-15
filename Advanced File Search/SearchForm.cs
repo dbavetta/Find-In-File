@@ -37,6 +37,10 @@ namespace Advanced_File_Search
             InitializeFindComponents();
             InitilizeListView();
 
+#if DEBUG
+            searchResultStatusStrip.Text = "";
+#endif
+
             m_SearchEngine = new SearchEngine();
             m_MatchList = new List<Match>();
         }
@@ -74,6 +78,18 @@ namespace Advanced_File_Search
             lineTextColumnWidth = queryResultsListView.Columns[2].Width;
         }
 
+        private void AdjustFormSize()
+        {
+            // no smaller than the size at design time
+            this.MinimumSize = new Size(this.Width, this.Height);
+
+            // no larger than screen size
+            this.MaximumSize = new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
         private void AddRowItemToListView(Match match)
         {
             ListViewItem item = new ListViewItem(match.GetRow());
@@ -108,12 +124,8 @@ namespace Advanced_File_Search
             m_MatchList.Clear();
             queryResultsListView.Items.Clear();
 
-            //Convert the users filter query to regex ~ needed for search
-            //*.psd1, *.psm1, *.cs, *.cshtml, *.txt" --> \.mp3|\.mp4
-            string searchPatternExpression = filterTextBox.Text.Replace(",", "|").Replace("*", @"\").Replace(" ", "");
-            Regex searchPattern = new Regex(searchPatternExpression, RegexOptions.IgnoreCase);
-
             string query = queryTextBox.Text;
+            string filter = filterTextBox.Text;
             string rootPath = rootDirectoryTextBox.Text;
             bool recursive = recursiveCheckBox.Checked;
             bool fuzzySearch = fuzzySearchCheckBox.Checked;
@@ -122,7 +134,8 @@ namespace Advanced_File_Search
             try
             {
                 UpdateStatusStrip("Searching...", Color.DarkOrange, true);
-                IEnumerable<string> files = m_SearchEngine.GetAllFilesInDirectory(rootPath, searchPattern, recursive);
+                IEnumerable<string> files = m_SearchEngine.GetAllFilesInDirectory(rootPath, filter, recursive);
+
 #if DEBUG
                 debuggerDataStatusStrip.DropDownItems.Clear();
                 debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + files.Count());
@@ -132,7 +145,7 @@ namespace Advanced_File_Search
             }
             catch (DirectoryNotFoundException)
             {
-                //There was an issure with the root directory string i.e. the location doesnt exist
+                //There was an issue with the root directory string i.e. the location doesnt exist
                 UpdateStatusStrip("The provided folder path does not exist.", Color.Red);
                 return;
             }
@@ -211,6 +224,12 @@ namespace Advanced_File_Search
 
                 e.DrawText(flags);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FilterDialog filterDialog = new FilterDialog(rootDirectoryTextBox.Text);
+            filterDialog.ShowDialog();
         }
     }
 }
