@@ -6,4 +6,5 @@ c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Adva
 c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.csproj.GenerateResource.Cache
 c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.exe
 c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced File Search.pdb
-c:\users\d760026\documents\visual studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced_File_Search.SearchConsole.resources
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced_File_Search.SearchForm.resources
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\Advanced_File_Search.FilterDialog.resources
