@@ -10,11 +10,11 @@ namespace Advanced_File_Search
 {
     public partial class SearchForm : Form
     {
-        private SearchEngine m_SearchEngine = null;
+        private SearchAggregator m_SearchAggregator = null;
 
         private List<Match> m_MatchList = null;
 
-        private ListViewItem lastHighlightedRow = null;
+        //private ListViewItem lastHighlightedRow = null;
 
         private string DEFAULT_QUERY = "Get-EmpiEnvironment";
         private string DEFAULT_FILE_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
@@ -25,14 +25,7 @@ namespace Advanced_File_Search
         private int lineTextColumnWidth;
 
         public SearchForm()
-        {
-            //TODO: Convert to WPF application instead of windows forms
-            //TODO: Autoscale and position controls relative to GUI size 
-            //TODO: Dynamically generate checkboxs for every file type found in directy path -> allow the user to check additional search filters
-            //TODO: Create event listener if needed still
-            //TODO: Change Search Engine class to use static methods and remove constructor
-            //TODO: Investigate SearchExtensions method for performance reasons and transition to use Regex.IsMatch instead of IndexOf
-
+        { 
             InitializeComponent();
             InitializeFindComponents();
             InitilizeListView();
@@ -41,7 +34,6 @@ namespace Advanced_File_Search
             searchResultStatusStrip.Text = "";
 #endif
 
-            m_SearchEngine = new SearchEngine();
             m_MatchList = new List<Match>();
         }
 
@@ -123,25 +115,23 @@ namespace Advanced_File_Search
         {
             m_MatchList.Clear();
             queryResultsListView.Items.Clear();
+            debuggerDataStatusStrip.DropDownItems.Clear();
 
             string query = queryTextBox.Text;
-            string filter = filterTextBox.Text;
+            string extensionFilter = filterTextBox.Text;
             string rootPath = rootDirectoryTextBox.Text;
             bool recursive = recursiveCheckBox.Checked;
             bool fuzzySearch = fuzzySearchCheckBox.Checked;
             bool matchCase = matchCaseCheckBox.Checked;
+            bool copyToClipboard = copyToClipboardCheckBox.Checked;
+
+            UpdateStatusStrip("Searching...", Color.DarkOrange, true);
 
             try
             {
-                UpdateStatusStrip("Searching...", Color.DarkOrange, true);
-                IEnumerable<string> files = m_SearchEngine.GetAllFilesInDirectory(rootPath, filter, recursive);
-
-#if DEBUG
-                debuggerDataStatusStrip.DropDownItems.Clear();
-                debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + files.Count());
-#endif
-
-                m_MatchList = m_SearchEngine.SearchFileSet(query, files, fuzzySearch, matchCase);
+                m_SearchAggregator = new SearchAggregator(query, fuzzySearch, matchCase, copyToClipboard);
+                m_SearchAggregator.GetAllFilesInDirectory(rootPath, extensionFilter, recursive);
+                m_MatchList = m_SearchAggregator.SearchFileSet();
             }
             catch (DirectoryNotFoundException)
             {
@@ -149,16 +139,25 @@ namespace Advanced_File_Search
                 UpdateStatusStrip("The provided folder path does not exist.", Color.Red);
                 return;
             }
-
-            foreach (var match in m_MatchList)
+            catch (Exception ex)
             {
-                AddRowItemToListView(match);
+#if DEBUG
+                debuggerDataStatusStrip.DropDownItems.Add("Exception: " + ex);
+#endif
             }
+            finally
+            {
+#if DEBUG
+                debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + m_SearchAggregator.GetFileCount());
+#endif
 
-            if(m_MatchList.Count > 0)
-                UpdateStatusStrip(m_MatchList.Count + " match(es) found.");
-            else
-                UpdateStatusStrip(m_MatchList.Count + " match(es) found.", Color.Red);
+                m_MatchList.ForEach(match => AddRowItemToListView(match));
+
+                if (m_MatchList.Count > 0)
+                    UpdateStatusStrip(m_MatchList.Count + " match(es) found.");
+                else
+                    UpdateStatusStrip(m_MatchList.Count + " match(es) found.", Color.Red);
+            }
         }
 
         private void OnQueryTextBox_TextChanged(object sender, EventArgs e)

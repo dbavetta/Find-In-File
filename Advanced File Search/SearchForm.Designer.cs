@@ -60,10 +60,10 @@ namespace Advanced_File_Search
             // findWhatLabel
             // 
             this.findWhatLabel.AutoSize = true;
-            this.findWhatLabel.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.findWhatLabel.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.findWhatLabel.Location = new System.Drawing.Point(6, 33);
             this.findWhatLabel.Name = "findWhatLabel";
-            this.findWhatLabel.Size = new System.Drawing.Size(75, 18);
+            this.findWhatLabel.Size = new System.Drawing.Size(67, 15);
             this.findWhatLabel.TabIndex = 0;
             this.findWhatLabel.Text = "Find What:";
             // 
@@ -71,9 +71,10 @@ namespace Advanced_File_Search
             // 
             this.queryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryTextBox.Location = new System.Drawing.Point(81, 28);
+            this.queryTextBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.queryTextBox.Location = new System.Drawing.Point(96, 28);
             this.queryTextBox.Name = "queryTextBox";
-            this.queryTextBox.Size = new System.Drawing.Size(500, 26);
+            this.queryTextBox.Size = new System.Drawing.Size(485, 23);
             this.queryTextBox.TabIndex = 1;
             this.queryTextBox.TextChanged += new System.EventHandler(this.OnQueryTextBox_TextChanged);
             // 
@@ -81,9 +82,10 @@ namespace Advanced_File_Search
             // 
             this.rootDirectoryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.rootDirectoryTextBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rootDirectoryTextBox.Location = new System.Drawing.Point(6, 21);
             this.rootDirectoryTextBox.Name = "rootDirectoryTextBox";
-            this.rootDirectoryTextBox.Size = new System.Drawing.Size(397, 26);
+            this.rootDirectoryTextBox.Size = new System.Drawing.Size(397, 23);
             this.rootDirectoryTextBox.TabIndex = 2;
             // 
             // rootDirectoryLabel
@@ -113,7 +115,7 @@ namespace Advanced_File_Search
             this.queryResultsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.queryResultsListView.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.queryResultsListView.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.queryResultsListView.FullRowSelect = true;
             this.queryResultsListView.GridLines = true;
             this.queryResultsListView.Location = new System.Drawing.Point(12, 143);
@@ -130,10 +132,10 @@ namespace Advanced_File_Search
             this.recursiveCheckBox.AutoSize = true;
             this.recursiveCheckBox.Checked = true;
             this.recursiveCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.recursiveCheckBox.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recursiveCheckBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recursiveCheckBox.Location = new System.Drawing.Point(152, 65);
             this.recursiveCheckBox.Name = "recursiveCheckBox";
-            this.recursiveCheckBox.Size = new System.Drawing.Size(87, 22);
+            this.recursiveCheckBox.Size = new System.Drawing.Size(79, 19);
             this.recursiveCheckBox.TabIndex = 7;
             this.recursiveCheckBox.Text = "Recursive";
             this.recursiveCheckBox.UseVisualStyleBackColor = true;
@@ -142,9 +144,10 @@ namespace Advanced_File_Search
             // 
             this.filterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.filterTextBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filterTextBox.Location = new System.Drawing.Point(6, 21);
             this.filterTextBox.Name = "filterTextBox";
-            this.filterTextBox.Size = new System.Drawing.Size(397, 26);
+            this.filterTextBox.Size = new System.Drawing.Size(397, 23);
             this.filterTextBox.TabIndex = 8;
             // 
             // folderBrowserDialog
@@ -215,10 +218,10 @@ namespace Advanced_File_Search
             // copyToClipboardCheckBox
             // 
             this.copyToClipboardCheckBox.AutoSize = true;
-            this.copyToClipboardCheckBox.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyToClipboardCheckBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.copyToClipboardCheckBox.Location = new System.Drawing.Point(286, 88);
             this.copyToClipboardCheckBox.Name = "copyToClipboardCheckBox";
-            this.copyToClipboardCheckBox.Size = new System.Drawing.Size(181, 22);
+            this.copyToClipboardCheckBox.Size = new System.Drawing.Size(165, 19);
             this.copyToClipboardCheckBox.TabIndex = 16;
             this.copyToClipboardCheckBox.Text = "Copy Search to Clipboard";
             this.copyToClipboardCheckBox.UseVisualStyleBackColor = true;
@@ -226,10 +229,10 @@ namespace Advanced_File_Search
             // matchCaseCheckBox
             // 
             this.matchCaseCheckBox.AutoSize = true;
-            this.matchCaseCheckBox.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.matchCaseCheckBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.matchCaseCheckBox.Location = new System.Drawing.Point(286, 65);
             this.matchCaseCheckBox.Name = "matchCaseCheckBox";
-            this.matchCaseCheckBox.Size = new System.Drawing.Size(97, 22);
+            this.matchCaseCheckBox.Size = new System.Drawing.Size(90, 19);
             this.matchCaseCheckBox.TabIndex = 9;
             this.matchCaseCheckBox.Text = "Match Case";
             this.matchCaseCheckBox.UseVisualStyleBackColor = true;
@@ -239,10 +242,10 @@ namespace Advanced_File_Search
             this.fuzzySearchCheckBox.AutoSize = true;
             this.fuzzySearchCheckBox.Checked = true;
             this.fuzzySearchCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.fuzzySearchCheckBox.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fuzzySearchCheckBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fuzzySearchCheckBox.Location = new System.Drawing.Point(152, 88);
             this.fuzzySearchCheckBox.Name = "fuzzySearchCheckBox";
-            this.fuzzySearchCheckBox.Size = new System.Drawing.Size(105, 22);
+            this.fuzzySearchCheckBox.Size = new System.Drawing.Size(95, 19);
             this.fuzzySearchCheckBox.TabIndex = 15;
             this.fuzzySearchCheckBox.Text = "Fuzzy Search";
             this.fuzzySearchCheckBox.UseVisualStyleBackColor = true;

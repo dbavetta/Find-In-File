@@ -1,0 +1,29 @@
+﻿
+[ ] | Convert to WPF application instead of windows forms
+[x] | Autoscale and position controls relative to GUI size 
+[~] | Dynamically generate checkboxs for every file type found in directy path -> allow the user to check additional search filters
+[ ] | Create event listener if needed still
+[ ] | Investigate SearchExtensions method for performance reasons and transition to use Regex.IsMatch instead of IndexOf
+[ ] | implement tabular search
+[ ] | save directory search results in chache (filter dialog) so the application doesnt waste time processing the same search twice
+[ ] | implement *.* filter compatibility
+[ ] | add exclude filetype/path if *.* ever gets working..
+[ ] | implement pause/stop search
+[ ] | implement match content preview (x lines about match, y lines below)
+[ ] | Implement multi directory search (entirely different/unrelated folders)
+[ ] | date filter?
+[ ] | Get the damn filter dialog done.....
+[ ] | 
+[ ] | 
+[ ] | 
+[ ] | 
+[ ] | 
+
+
+
+http://stackoverflow.com/questions/5962595/how-do-you-resize-a-form-to-fit-its-content-automatically
+https://www.fileseek.ca/
+
+Regex
+http://stackoverflow.com/questions/33665871/fuzzy-matches-of-strings-with-percentage-in-c-sharp
+https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx
