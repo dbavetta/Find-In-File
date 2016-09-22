@@ -40,8 +40,15 @@ namespace Advanced_File_Search
             if (!string.IsNullOrEmpty(filePathTextBox.Text))
             {
                 extensions = GetExtensionsInDirectory(filePathTextBox.Text.Trim());
-                DataGridViewCheckBoxColumn column = new DataGridViewCheckBoxColumn();
-                
+
+                for (int i = 0; i < 4; i++)
+                {
+                    DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+                    DataGridViewColumn textColumn = new DataGridViewColumn();
+                    extensionDataGridView.Columns.Add(checkBoxColumn);
+                    extensionDataGridView.Columns.Add(textColumn);
+                }
+                //extensionDataGridView.Rows.Add({new CheckBox(), "asdas", new CheckBox() });
             }
         }
     }

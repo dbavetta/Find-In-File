@@ -8,37 +8,55 @@ using System.Windows.Forms;
 
 namespace Advanced_File_Search
 {
-    public class SearchEngine
+    public class SearchAggregator
     {
+        private readonly string m_Query;
+        private readonly bool m_FuzzySearch;
+        private readonly bool m_matchCase;
+        private readonly bool m_CopyToClipboard;
+
         private ConcurrentBag<Match> m_MatchList;
+
+        private IEnumerable<string> m_FilesToSearch;
+
         private bool m_SingleFile = true;
 
-        public SearchEngine() //EventListener listener
+        public SearchAggregator()
         {
+            // Empty
+        }
+
+        public SearchAggregator(string query, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false) //EventListener listener
+        {
+            m_Query = query;
+            m_FuzzySearch = fuzzySearch;
+            m_matchCase = matchCase;
+            m_CopyToClipboard = copyToClipboard;
             m_MatchList = new ConcurrentBag<Match>();
         }
 
-        public List<Match> SearchFileSet(string query, IEnumerable<string> files, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false)
+        // Method 1
+        public List<Match> SearchFileSet()
         {
             m_SingleFile = false;
 
             if (!m_MatchList.IsEmpty)
                 m_MatchList = new ConcurrentBag<Match>();
 
-            files.AsParallel().ForAll(currentFile => {
+            m_FilesToSearch.AsParallel().ForAll(currentFilePath => {
 
-                SearchFile(query, currentFile, fuzzySearch, matchCase, copyToClipboard);
+                SearchFile(currentFilePath);
             });
 
             return m_MatchList.ToList();
         }
 
-        public List<Match> SearchFile(string query, string filePath, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false)
+        public List<Match> SearchFile(string filePath)
         {
             if(m_SingleFile && !m_MatchList.IsEmpty)
                 m_MatchList = new ConcurrentBag<Match>();
 
-            List<Match> matches = FindMatchesInFile(filePath, query, fuzzySearch, matchCase);
+            List<Match> matches = FindMatchesInFile(filePath, m_Query, m_FuzzySearch, m_matchCase);
 
             if (matches.Count > 0)
             {
@@ -46,25 +64,44 @@ namespace Advanced_File_Search
                     m_MatchList.Add(match);
 
                 // Copy searched for text to system clipboard
-                if (copyToClipboard)
-                    Clipboard.SetText(query);
+                if (m_CopyToClipboard)
+                    Clipboard.SetText(m_Query);
             }
 
             return m_MatchList.ToList();
         }
 
-        public IEnumerable<string> GetAllFilesInDirectory(string rootPath, string filter, bool recursive = false)
+        public int GetFileCount()
         {
-            Regex _filter = ConvertStringToRegex(filter);
-
-            return GetAllFilesInDirectory(rootPath, _filter, recursive);
+            return m_FilesToSearch != null ? m_FilesToSearch.Count() : 0;
         }
 
-        public IEnumerable<string> GetAllFilesInDirectory(string rootPath, Regex filter, bool recursive = false)
+        /// <summary>
+        /// To be used in conjuction with the empty constructor, as a utility method, to gather all files within a specified directory.
+        /// - Not intended to be used for a content search.
+        /// - Target Usage: FilterDiaglog
+        /// </summary>
+        /// <param name="rootPath"> The base directory to retrieve filepaths from </param>
+        /// <param name="extensionFilter"> Ex. *.psd1, *.psm1, *.cs </param>
+        /// <param name="recursive"> Specifies whether or not to include sub directories in the iteration </param>
+        /// <returns></returns>
+        public IEnumerable<string> ReturnAllFilesInDirectory(string rootPath, string extensionFilter, bool recursive = false)
+        {
+            Regex filter = ConvertStringToRegex(extensionFilter);
+            return GetAllFilesInDirectory(rootPath, filter, recursive);
+        }
+
+        public void GetAllFilesInDirectory(string rootPath, string extensionFilter, bool recursive = false)
+        {
+            Regex filter = ConvertStringToRegex(extensionFilter);
+            m_FilesToSearch = GetAllFilesInDirectory(rootPath, filter, recursive);
+        }
+
+        private IEnumerable<string> GetAllFilesInDirectory(string rootPath, Regex extensionFilter, bool recursive = false)
         {
             return Directory.EnumerateFiles(rootPath, "*",
                 recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
-                        .Where(file => filter.IsMatch(Path.GetExtension(file)));
+                        .Where(file => extensionFilter.IsMatch(Path.GetExtension(file)));
         }
 
         //Convert the users filter query to regex ~ needed for search
