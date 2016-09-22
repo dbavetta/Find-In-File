@@ -35,6 +35,7 @@ namespace Advanced_File_Search
             m_MatchList = new ConcurrentBag<Match>();
         }
 
+        // Method 1
         public List<Match> SearchFileSet()
         {
             m_SingleFile = false;

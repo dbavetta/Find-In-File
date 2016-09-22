@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -127,11 +128,15 @@ namespace Advanced_File_Search
 
             UpdateStatusStrip("Searching...", Color.DarkOrange, true);
 
+            Stopwatch stopWatch = new Stopwatch();
+            
             try
             {
+                stopWatch.Start();
                 m_SearchAggregator = new SearchAggregator(query, fuzzySearch, matchCase, copyToClipboard);
                 m_SearchAggregator.GetAllFilesInDirectory(rootPath, extensionFilter, recursive);
                 m_MatchList = m_SearchAggregator.SearchFileSet();
+                stopWatch.Stop();
             }
             catch (DirectoryNotFoundException)
             {
@@ -150,13 +155,17 @@ namespace Advanced_File_Search
 #if DEBUG
                 debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + m_SearchAggregator.GetFileCount());
 #endif
-
+                // BeginUpdate/EndUpdate used to prevent the UI from refreshing everytime a new item is added -> makes the results much slower to appear on screen
+                queryResultsListView.BeginUpdate();
                 m_MatchList.ForEach(match => AddRowItemToListView(match));
+                queryResultsListView.EndUpdate();
 
                 if (m_MatchList.Count > 0)
                     UpdateStatusStrip(m_MatchList.Count + " match(es) found.");
                 else
                     UpdateStatusStrip(m_MatchList.Count + " match(es) found.", Color.Red);
+
+                Console.WriteLine("Search Time: " + stopWatch.Elapsed);
             }
         }
 

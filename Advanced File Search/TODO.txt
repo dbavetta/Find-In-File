@@ -13,13 +13,14 @@
 [ ] | Implement multi directory search (entirely different/unrelated folders)
 [ ] | date filter?
 [ ] | Get the damn filter dialog done.....
-[ ] | 
+[ ] | Account for read file permissions
 [ ] | 
 [ ] | 
 [ ] | 
 [ ] | 
 
-
+https://lucenenet.apache.org/
+http://www.codeproject.com/Articles/320219/Lucene-Net-ultra-fast-search-for-MVC-or-WebForms
 
 http://stackoverflow.com/questions/5962595/how-do-you-resize-a-form-to-fit-its-content-automatically
 https://www.fileseek.ca/
@@ -27,3 +28,6 @@ https://www.fileseek.ca/
 Regex
 http://stackoverflow.com/questions/33665871/fuzzy-matches-of-strings-with-percentage-in-c-sharp
 https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx
+
+http://stackoverflow.com/questions/17756042/improve-the-performance-for-enumerating-files-and-folders-using-net
+http://cc.davelozinski.com/c-sharp/fastest-way-to-check-if-a-string-occurs-within-a-string
