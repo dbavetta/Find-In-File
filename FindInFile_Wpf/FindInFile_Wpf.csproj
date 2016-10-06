@@ -55,6 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Utilities\SearchAggregator.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\ThreadSafeOperations.cs" />
+    <Compile Include="ViewModels\Commands\BrowseCommand.cs" />
+    <Compile Include="ViewModels\Commands\FindCommand.cs" />
+    <Compile Include="ViewModels\FindTextViewModel.cs" />
+    <Compile Include="ViewModels\FilterGroupViewModel.cs" />
+    <Compile Include="ViewModels\FolderGroupViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,9 +100,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Compile Include="ViewModels\Commands\AdvancedCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

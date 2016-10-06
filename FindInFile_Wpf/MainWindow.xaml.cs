@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using FindInFile_Wpf.Models;
 
 namespace FindInFile_Wpf
 {
@@ -23,6 +14,15 @@ namespace FindInFile_Wpf
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        // Open File
+        private void HandleListViewDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Match match = ((ListViewItem)sender).Content as Match;
+
+            if (match != null && !string.IsNullOrEmpty(match.Path))
+                Process.Start(match.Path);
         }
     }
 }
