@@ -7,4 +7,3 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Adva
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.exe.config
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.exe
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\bin\Debug\Advanced File Search.pdb
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Debug\FindInFile.csprojResolveAssemblyReference.cache

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace FindInFile_Wpf.Utilities
+namespace FindInFile.Wpf.Utilities
 {
     public class ThreadSafeOperations
     {

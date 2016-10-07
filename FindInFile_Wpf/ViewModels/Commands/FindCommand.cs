@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Windows.Input;
-using FindInFile_Wpf.Models;
-using FindInFile_Wpf.Utilities;
+using FindInFile.Models;
+using SearchAggregatorUtility;
 
-namespace FindInFile_Wpf.ViewModels.Commands
+namespace FindInFile.Wpf.ViewModels.Commands
 {
-    class FindCommand : ICommand
+    class FindCommand : BaseCommand
     {
         private FindTextViewModel m_FindTextViewModel;
         private SearchAggregator m_SearchAggregator;
@@ -18,19 +17,7 @@ namespace FindInFile_Wpf.ViewModels.Commands
         }
 
         #region ICommand Members
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             //debuggerDataStatusStrip.DropDownItems.Clear();
             try
@@ -44,7 +31,7 @@ namespace FindInFile_Wpf.ViewModels.Commands
                                                           m_FindTextViewModel.FilterText, 
                                                           m_FindTextViewModel.RecursiveChecked);
 
-                m_FindTextViewModel.MatchList = new ObservableCollection<Match>(m_SearchAggregator.SearchFileSet());
+                m_FindTextViewModel.MatchList = new ObservableCollection<SearchMatch>(m_SearchAggregator.SearchFileSet());
             }
             catch (DirectoryNotFoundException)
             {
@@ -63,7 +50,6 @@ namespace FindInFile_Wpf.ViewModels.Commands
 #if DEBUG
                 //debuggerDataStatusStrip.DropDownItems.Add("Number of files retrieved in all directories: " + m_SearchAggregator.GetFileCount());
 #endif
-
                 if (m_FindTextViewModel.MatchList.Count > 0)
                     m_FindTextViewModel.UpdateStatusBarText(m_FindTextViewModel.MatchList.Count + " match(es) found.");
                 else

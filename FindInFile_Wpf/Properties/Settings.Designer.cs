@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FindInFile_Wpf.Properties
+namespace FindInFile.Wpf.Properties
 {
 
 

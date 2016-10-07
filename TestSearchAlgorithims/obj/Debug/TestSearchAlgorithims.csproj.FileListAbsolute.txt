@@ -5,3 +5,4 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Test
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.csproj.GenerateResource.Cache
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.exe
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.pdb
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.csprojResolveAssemblyReference.cache

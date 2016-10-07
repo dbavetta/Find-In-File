@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using FindInFile_Wpf.Models;
-using FindInFile_Wpf.ViewModels.Commands;
+using FindInFile.Models;
+using FindInFile.Wpf.ViewModels.Commands;
 
-namespace FindInFile_Wpf.ViewModels
+namespace FindInFile.Wpf.ViewModels
 {
     public class FindTextViewModel : INotifyPropertyChanged
     {
@@ -13,13 +13,13 @@ namespace FindInFile_Wpf.ViewModels
         private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private const string DEFAULT_FILTER = "*.ps1, *.psd1, *.psm1, *.cs, *.cshtml, *.html, *.txt, *.js";
 
-        private ObservableCollection<Match> m_MatchList;
+        private ObservableCollection<SearchMatch> m_MatchList;
         private string m_StatusBarText;
         private string m_StatusBarTextColor;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<Match> MatchList
+        public ObservableCollection<SearchMatch> MatchList
         {
             get { return m_MatchList; }
             set { m_MatchList = value; NotifyPropertyChanged(); }

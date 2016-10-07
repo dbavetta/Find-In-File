@@ -1,0 +1,4 @@
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\bin\Debug\FindInFile.Models.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\bin\Debug\FindInFile.Models.pdb
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\obj\Debug\FindInFile.Models.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\obj\Debug\FindInFile.Models.pdb

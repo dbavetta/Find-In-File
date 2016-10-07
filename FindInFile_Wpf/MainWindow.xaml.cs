@@ -2,9 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using FindInFile_Wpf.Models;
+using FindInFile.Models;
 
-namespace FindInFile_Wpf
+namespace FindInFile.Wpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,7 +19,7 @@ namespace FindInFile_Wpf
         // Open File
         private void HandleListViewDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Match match = ((ListViewItem)sender).Content as Match;
+            SearchMatch match = ((ListViewItem)sender).Content as SearchMatch;
 
             if (match != null && !string.IsNullOrEmpty(match.Path))
                 Process.Start(match.Path);

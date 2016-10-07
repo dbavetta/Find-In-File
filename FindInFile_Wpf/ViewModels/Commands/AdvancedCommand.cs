@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using FindInFile_Wpf.Views;
 
-namespace FindInFile_Wpf.ViewModels.Commands
+namespace FindInFile.Wpf.ViewModels.Commands
 {
-    public class AdvancedCommand : ICommand
+    public class AdvancedCommand : BaseCommand
     {
         private FindTextViewModel m_FindTextViewModel;
 
@@ -18,25 +19,14 @@ namespace FindInFile_Wpf.ViewModels.Commands
         }
 
         #region ICommand Members
-
-        public event EventHandler CanExecuteChanged
+        public override void Execute(object parameter)
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            //Open Filter Dialog
-            //Return result to list view
-            MessageBox.Show("Advanced Click");
+            //TODO: Open Filter Dialog
+            //TODO: Return result to list view
+            var fileExtensionDialog = new FileExtensionDialog();
+            fileExtensionDialog.Show();
+            //MessageBox.Show("Advanced Click");
         }
         #endregion
-
     }
 }

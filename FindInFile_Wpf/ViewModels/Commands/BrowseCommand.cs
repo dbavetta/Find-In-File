@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace FindInFile_Wpf.ViewModels.Commands
+namespace FindInFile.Wpf.ViewModels.Commands
 {
-    public class BrowseCommand : ICommand
+    public class BrowseCommand : BaseCommand
     {
         private FindTextViewModel m_FindTextViewModel;
 
@@ -18,23 +19,14 @@ namespace FindInFile_Wpf.ViewModels.Commands
         }
 
         #region ICommand Members
-
-        public event EventHandler CanExecuteChanged
+        public override void Execute(object parameter)
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            //Open Folder browser dialog
-            //Set formviews folder path property to result
-            MessageBox.Show("Browse Click");
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                    m_FindTextViewModel.RootPathText = dialog.SelectedPath;
+            }
         }
         #endregion
     }
