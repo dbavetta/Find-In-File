@@ -7,44 +7,46 @@
         xmlns:viewModels="clr-namespace:FindInFile_Wpf.ViewModels"
         xmlns:converter="clr-namespace:FindInFile_Wpf.ViewModels.Converters"
         mc:Ignorable="d"
-        Title="FileExtensionDialog" Height="300" Width="350"
+        Title="FileExtensionDialog" Height="400" Width="360" MinHeight="350" MaxWidth="360" MinWidth="360"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewModels:FileExtensionDialogViewModel x:Key="FilterExtensionViewModel"/>
     </Window.Resources>
-    <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock Text="Root Path:" Margin="10,5"/>
-            <TextBox Name="FolderPathTextBox" Margin="10, 0, 10, 10" Text="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}"/>
-            <StackPanel Orientation="Horizontal" Margin="10, 0, 10, 10">
-                <Button Command="{Binding RetrieveExtensionCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}">
-                    <TextBlock Text="Retrieve all file extension types in directory" Margin="2,0"/>
-                </Button>
-                <CheckBox Content="Recursive" IsChecked="{Binding RecursiveChecked, Source={StaticResource FilterExtensionViewModel}}" Margin="5"/>
+    <GroupBox Header="Root Path" Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical">
+                <TextBox Name="FolderPathTextBox" Margin="0, 0, 0, 5" Text="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}"/>
+                <StackPanel Orientation="Horizontal" Margin="0, 0, 5, 0">
+                    <Button Command="{Binding RetrieveExtensionCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}">
+                        <TextBlock Text="Retrieve all file extension types in directory" Margin="2,0"/>
+                    </Button>
+                    <CheckBox Content="Recursive" IsChecked="{Binding RecursiveChecked, Source={StaticResource FilterExtensionViewModel}}" Margin="5"/>
+                </StackPanel>
             </StackPanel>
-            <TextBlock Text="Extension Types:" Margin="10, 0"/>
             <!--Update Binding matrix-->
-            <DataGrid Margin="10,5">
-                <DataGrid.Resources>
-                    <converter:ExtensionTypesDataGridConverter x:Key="ExtensionTypesDataGridConverter" />
-                </DataGrid.Resources>
-                <DataGrid.ItemsSource>
-                    <Binding Converter="{StaticResource ExtensionTypesDataGridConverter}" Path="ExtensionMatrix" Source="{StaticResource FilterExtensionViewModel}"/>
-                </DataGrid.ItemsSource>
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="AUTO">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox IsChecked="{Binding Checked}" Margin="2,0" />
-                                    <TextBlock Text="{Binding Text, Mode=OneWay}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,5">
+            <DockPanel Grid.Row="1">
+                <TextBlock DockPanel.Dock="Top" Text="Extension Types:"/>
+                <DataGrid MinHeight="50" ItemsSource="{Binding ExtensionGrid, Source={StaticResource FilterExtensionViewModel}}">
+                    <DataGrid.Resources>
+                        <DataTemplate x:Key="ExtensionTemplate" >
+                            <StackPanel>
+                                <CheckBox IsChecked="{Binding ExtensionGrid/Include, Source={StaticResource FilterExtensionViewModel}}"/>
+                                <TextBlock Text="{Binding ExtensionGrid/Extension, Source={StaticResource FilterExtensionViewModel}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGrid.Resources>
+                </DataGrid>
+            </DockPanel>
+            <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,5">
                 <Button Name="OkButton" Margin="5,0">
                     <TextBlock Text="Ok" Margin="15,0"/>
                 </Button>
@@ -52,6 +54,6 @@
                     <TextBlock Text="Cancel" Margin="5,0"/>
                 </Button>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </GroupBox>
 </Window>

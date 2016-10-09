@@ -15,19 +15,20 @@ namespace FindInFile_Wpf.ViewModels
     {
         public int ColumnCount = 8;
 
-        private ExtensionCellItem[,] m_ExtensionMatrix;
+        private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
+        private List<ExtensionCellItem> m_ExtensionGrid;
         private string m_FolderPath;
         private bool m_RecursiveChecked;
         private ICommand m_RetrieveExtentionsCommand;
-        //private ICommand m_OkayCommand;
-        //private ICommand m_CancelCommand;
+        private ICommand m_OkayCommand;
+        private ICommand m_CancelCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ExtensionCellItem[,]  ExtensionMatrix
+        public List<ExtensionCellItem> ExtensionGrid
         {
-            get { return m_ExtensionMatrix; }
-            set { m_ExtensionMatrix = value; NotifyPropertyChanged(); }
+            get { return m_ExtensionGrid; }
+            set { m_ExtensionGrid = value; NotifyPropertyChanged(); }
         }
 
         public string FolderPath
@@ -47,10 +48,22 @@ namespace FindInFile_Wpf.ViewModels
             get { return m_RetrieveExtentionsCommand; }
             set { m_RetrieveExtentionsCommand = value; }
         }
+        public ICommand OkayCommand
+        {
+            get { return m_OkayCommand; }
+            set { m_OkayCommand = value; }
+        }
+
+        public ICommand CancelCommand
+        {
+            get { return m_CancelCommand; }
+            set { m_CancelCommand = value; }
+        }
 
         public FileExtensionDialogViewModel()
         {
             //Send request  for the root path to main form view 
+            FolderPath = DEFAULT_ROOT_PATH;
             //Initialize Commands
             RetrieveExtensionCommand = new RetrieveExtensionsCommand(this);
         }

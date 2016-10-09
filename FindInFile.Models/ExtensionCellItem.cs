@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FindInFile.Models
+﻿namespace FindInFile.Models
 {
     public class ExtensionCellItem
     {
-        private bool m_Checked;
-        private string m_Text;
+        private bool m_included;
+        private string m_Extension;
+        private int m_ExtensionCount;
 
-        public bool Checked
+        public bool Include
         {
-            get { return m_Checked; }
+            get { return m_included; }
+            set { m_included = value; }
         }
 
-        public string Text
+        public string Extension
         {
-            get { return m_Text; }
+            get { return m_Extension; }
         }
 
-        public ExtensionCellItem(bool isChecked, string text)
+        public int Count
         {
-            m_Checked = isChecked;
-            m_Text = text;
+            get { return m_ExtensionCount; }
+        }
+
+        public ExtensionCellItem(string text, int extensionCount, bool isChecked = true)
+        {
+            m_included = isChecked;
+            m_Extension = text;
+            m_ExtensionCount = extensionCount;
         }
     }
 }

@@ -1,54 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FindInFile.Models;
+using ClaySharp;
 using FindInFile.Wpf.ViewModels.Commands;
 using SearchAggregatorUtility;
+using FindInFile.Models;
 
 namespace FindInFile_Wpf.ViewModels.Commands
 {
     class RetrieveExtensionsCommand : BaseCommand
     {
         private FileExtensionDialogViewModel m_FileExtentionViewModel;
-        private SearchAggregator m_SearchAggregator;
         private readonly int m_ColumnCount;
+        private int m_RowCount;
 
         public RetrieveExtensionsCommand(FileExtensionDialogViewModel viewModel)
         {
-            m_SearchAggregator = new SearchAggregator();
             m_FileExtentionViewModel = viewModel;
             m_ColumnCount = viewModel.ColumnCount;
         }
 
         public override void Execute(object parameter)
         {
-            List<string> extensions = new List<string>();
+            string rootPath = m_FileExtentionViewModel.FolderPath;
+            bool recursive = m_FileExtentionViewModel.RecursiveChecked;
+            var dataGrid = new List<ExtensionCellItem>();
 
-            IEnumerable<string> files = m_SearchAggregator.ReturnAllFilesInDirectory(m_FileExtentionViewModel.FolderPath,  
-                                                                                     m_FileExtentionViewModel.RecursiveChecked);
+            var extensions = DirectoryExplorer.GetExtensions(rootPath, recursive).GroupBy(ext => ext).OrderByDescending(ext => ext.Count());
 
-            foreach (var path in files)
+            if (extensions != null && extensions.Count() > 0)
             {
-                extensions.Add(Path.GetExtension(path));
-            }
-
-            int rowCount = (extensions.Count / m_ColumnCount) > 0 ? (extensions.Count / m_ColumnCount) : 1;
-            var matrix = new ExtensionCellItem[rowCount, m_ColumnCount];
-
-            int extensionIter = 0;
-
-            for (int column = 0; column < m_ColumnCount; column++)
-            {
-                for (int row = 0; row < rowCount; row++)
+                foreach (var extension in extensions)
                 {
-                    matrix[row, column] = new ExtensionCellItem(false, extensions[extensionIter]);
+                    dataGrid.Add(new ExtensionCellItem(extension.Key, extension.Count()));
                 }
-            }
 
-            m_FileExtentionViewModel.ExtensionMatrix = matrix;
+                m_FileExtentionViewModel.ExtensionGrid = dataGrid;
+            }
         }
     }
+
+    //public override void Execute(object parameter)
+    //    {
+    //        string rootPath = m_FileExtentionViewModel.FolderPath;
+    //        bool recursive = m_FileExtentionViewModel.RecursiveChecked;
+    //        var dataGrid = new List<dynamic>();
+    //        dynamic _new = new ClayFactory();
+
+    //        List<string> extensions = DirectoryExplorer.GetExtensions(rootPath, recursive).ToList();
+
+    //        if (extensions != null && extensions.Count > 0)
+    //        {
+    //            m_RowCount = (extensions.Count / m_ColumnCount) > 0 ? (extensions.Count / m_ColumnCount) : 1;
+
+    //            int extensionIter = 0;
+    //            for (int row = 0; row < m_RowCount; row++)
+    //            {
+    //                var extRow = _new.ExtensionRow();
+    //                Sample s = new Sample();
+
+    //                for (int column = 0; column < m_ColumnCount; column++)
+    //                {
+    //                    if (extensionIter < extensions.Count)
+    //                    {
+    //                        switch (extensionIter)
+    //                        {
+    //                        }
+    //                        string extensionKeyName = "extension" + row + "_Key";
+    //                        string extensionValuename = "extension" + row + "_Value";
+    //                        extRow[extensionKeyName] = extensions[extensionIter];
+    //                        extRow[extensionValuename] = false;
+    //                        extensionIter++;
+    //                    }
+    //                }
+    //                dataGrid.Add(Convert.ChangeType(extRow, typeof(object)));
+    //            }
+
+    //            m_FileExtentionViewModel.ExtensionGrid2 = dataGrid;
+    //        }
+    //    }
+    //}
 }

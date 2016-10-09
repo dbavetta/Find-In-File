@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchAggregatorUtility", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindInFile.Models", "FindInFile.Models\FindInFile.Models.csproj", "{A7518F4C-3B99-4A83-807F-15CDFE719A6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventAggregator", "EventAggregator\EventAggregator.csproj", "{D2A45C11-E5F1-469A-980A-D247962544AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A7518F4C-3B99-4A83-807F-15CDFE719A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7518F4C-3B99-4A83-807F-15CDFE719A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7518F4C-3B99-4A83-807F-15CDFE719A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A45C11-E5F1-469A-980A-D247962544AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A45C11-E5F1-469A-980A-D247962544AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A45C11-E5F1-469A-980A-D247962544AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A45C11-E5F1-469A-980A-D247962544AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

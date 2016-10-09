@@ -33,6 +33,7 @@
             get { return m_MatchedLine; }
         }
 
+        //To be used later in development
         public string[] MatchedLineParts
         {
             get { return m_LineMatch.Parts; }

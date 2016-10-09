@@ -4,38 +4,20 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using FindInFile.Models;
 using FindInFile.Wpf.ViewModels.Commands;
+using Microsoft.Practices.Unity;
+using Prism.Events;
+using Prism.Modularity;
 
 namespace FindInFile.Wpf.ViewModels
 {
-    public class FindTextViewModel : INotifyPropertyChanged
+    public class FindTextViewModel : INotifyPropertyChanged, IModule
     {
         private const string DEFAULT_QUERY = "Get-EmpiEnvironment";
         private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private const string DEFAULT_FILTER = "*.ps1, *.psd1, *.psm1, *.cs, *.cshtml, *.html, *.txt, *.js";
-
         private ObservableCollection<SearchMatch> m_MatchList;
-        private string m_StatusBarText;
-        private string m_StatusBarTextColor;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public ObservableCollection<SearchMatch> MatchList
-        {
-            get { return m_MatchList; }
-            set { m_MatchList = value; NotifyPropertyChanged(); }
-        }
-
-        public string StatusBarText
-        {
-            get { return m_StatusBarText; }
-            set {  m_StatusBarText = value; NotifyPropertyChanged(); }
-        }
-
-        public string StatusBarTextColor
-        {
-            get { return m_StatusBarTextColor; }
-            set { m_StatusBarTextColor = value; NotifyPropertyChanged(); }
-        }
+        private SubscriptionToken subscriptionToken;
+        public IUnityContainer Container { get; private set; }
 
         #region Find Group Private Members
         private string m_QueryText;
@@ -54,6 +36,11 @@ namespace FindInFile.Wpf.ViewModels
         #region Folder Group Private Members
         private string m_RootPathText;
         private ICommand m_BrowseClick;
+        #endregion
+
+        #region Window Private Members
+        private string m_StatusBarText;
+        private string m_StatusBarTextColor;
         #endregion
 
         #region Find Group Public Members
@@ -105,7 +92,7 @@ namespace FindInFile.Wpf.ViewModels
         }
         #endregion
 
-        #region Folder Group Private Members
+        #region Folder Group Public Members
         public string RootPathText
         {
             get { return m_RootPathText; }
@@ -118,14 +105,36 @@ namespace FindInFile.Wpf.ViewModels
             set { m_BrowseClick = value; }
         }
         #endregion
-         
+
+        #region Window Public Members
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<SearchMatch> MatchList
+        {
+            get { return m_MatchList; }
+            set { m_MatchList = value; NotifyPropertyChanged(); }
+        }
+
+        public string StatusBarText
+        {
+            get { return m_StatusBarText; }
+            set { m_StatusBarText = value; NotifyPropertyChanged(); }
+        }
+
+        public string StatusBarTextColor
+        {
+            get { return m_StatusBarTextColor; }
+            set { m_StatusBarTextColor = value; NotifyPropertyChanged(); }
+        }
+        #endregion
+
         public FindTextViewModel()
         {
             FindClicked = new FindCommand(this);
             BrowseClick = new BrowseCommand(this);
             AdvancedClick = new AdvancedCommand(this);
 
-            // Pre fill form with test data 
+#if DEBUG
             QueryText = DEFAULT_QUERY;
             RootPathText = DEFAULT_ROOT_PATH;
             FilterText = DEFAULT_FILTER;
@@ -133,9 +142,17 @@ namespace FindInFile.Wpf.ViewModels
             FuzzySearchChecked = true;
             StatusBarText = "Place Holder Text...";
             StatusBarTextColor = "Green";
+            Container = new UnityContainer();
+            //Container.RegisterType<EventAggregator, EventAggregator>();
+#endif
         }
 
-        public void UpdateStatusBarText(string text, string color = "Green")
+        public void Initialize()
+        {
+            
+        }
+
+        public void UpdateStatusBar(string text, string color = "Green")
         {
             StatusBarText = text;
             StatusBarTextColor = color;

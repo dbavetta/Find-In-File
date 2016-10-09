@@ -13,9 +13,17 @@
 [ ] | Get the damn filter dialog done.....
 [ ] | Account for read file permissions
 [ ] | TURN SEARCH AGGREGATOR INTO A CLASS LIBRARY (dll) AND ADD REFERENCE TO PROJECT
+[ ] | IMPLEMENT .Net tasking so the UI doesnt hang while waiting for results to be returned (mainly when useing full wild card search *.* )
+[ ] | Collapse group boxes 
+[ ] | Dropdown textboxs with history
+[ ] | Encrypt saved data (store as json)
 [ ] | 
 [ ] | 
 [ ] | 
+[ ] | 
+[ ] | 
+[ ] | 
+
 
 https://lucenenet.apache.org/
 http://www.codeproject.com/Articles/320219/Lucene-Net-ultra-fast-search-for-MVC-or-WebForms

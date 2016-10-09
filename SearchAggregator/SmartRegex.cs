@@ -16,9 +16,10 @@ namespace SearchAggregatorUtility
         {
             return "^" + 
              Regex.Escape(pattern).
-             Replace("\\*", ".*").
+             Replace("\\*", ".*?").
              Replace("\\?", ".").
-             Replace(",", "|") + 
+             Replace(",", "|").
+             Replace(" ", "") + 
              "$";
         }
     }

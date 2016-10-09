@@ -27,3 +27,8 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Find
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\Prism.Wpf.xml
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\obj\Debug\Views\FileExtensionDialog.g.cs
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\obj\Debug\Views\FileExtensionDialog.baml
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\Castle.Core.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\Castle.DynamicProxy2.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\ClaySharp.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\log4net.dll
+C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\bin\Debug\log4net.xml

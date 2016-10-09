@@ -23,7 +23,7 @@ namespace FindInFile.Wpf.ViewModels.Commands
         {
             //TODO: Open Filter Dialog
             //TODO: Return result to list view
-            var fileExtensionDialog = new FileExtensionDialog();
+            var fileExtensionDialog = new FileExtensionDialog(); //Convert to idisposable s it can be places in a using block
             fileExtensionDialog.Show();
             //MessageBox.Show("Advanced Click");
         }
