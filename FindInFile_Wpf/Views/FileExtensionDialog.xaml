@@ -1,11 +1,10 @@
-﻿<Window x:Class="FindInFile_Wpf.Views.FileExtensionDialog"
+﻿<Window x:Name="window" x:Class="FindInFile.Wpf.Views.FileExtensionDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FindInFile_Wpf.Views"
-        xmlns:viewModels="clr-namespace:FindInFile_Wpf.ViewModels"
-        xmlns:converter="clr-namespace:FindInFile_Wpf.ViewModels.Converters"
+        xmlns:local="clr-namespace:FindInFile.Wpf.Views"
+        xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
         mc:Ignorable="d"
         Title="FileExtensionDialog" Height="400" Width="360" MinHeight="350" MaxWidth="360" MinWidth="360"
         WindowStartupLocation="CenterScreen">
@@ -19,7 +18,6 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="AUTO"/>
             </Grid.RowDefinitions>
-
             <StackPanel Orientation="Vertical">
                 <TextBox Name="FolderPathTextBox" Margin="0, 0, 0, 5" Text="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}"/>
                 <StackPanel Orientation="Horizontal" Margin="0, 0, 5, 0">
@@ -30,27 +28,18 @@
                 </StackPanel>
             </StackPanel>
             <!--Update Binding matrix-->
-            <DockPanel Grid.Row="1">
+            <DockPanel Grid.Row="1" Margin="0,5">
                 <TextBlock DockPanel.Dock="Top" Text="Extension Types:"/>
-                <DataGrid MinHeight="50" ItemsSource="{Binding ExtensionGrid, Source={StaticResource FilterExtensionViewModel}}">
-                    <DataGrid.Resources>
-                        <DataTemplate x:Key="ExtensionTemplate" >
-                            <StackPanel>
-                                <CheckBox IsChecked="{Binding ExtensionGrid/Include, Source={StaticResource FilterExtensionViewModel}}"/>
-                                <TextBlock Text="{Binding ExtensionGrid/Extension, Source={StaticResource FilterExtensionViewModel}}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGrid.Resources>
-                </DataGrid>
+                <DataGrid GridLinesVisibility="None" MinHeight="50" ItemsSource="{Binding ExtensionGrid, Source={StaticResource FilterExtensionViewModel}}"/>
             </DockPanel>
             <StackPanel Grid.Row="2" 
                     Orientation="Horizontal" 
                     HorizontalAlignment="Right" 
                     Margin="0,5">
-                <Button Name="OkButton" Margin="5,0">
+                <Button Name="OkButton" Margin="5,0" Command="{Binding OkayCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding ElementName=window, Mode=OneWay}">
                     <TextBlock Text="Ok" Margin="15,0"/>
                 </Button>
-                <Button Name="CancelButton">
+                <Button Name="CancelButton" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Command="{Binding CancelCommand, Source={StaticResource FilterExtensionViewModel}}">
                     <TextBlock Text="Cancel" Margin="5,0"/>
                 </Button>
             </StackPanel>

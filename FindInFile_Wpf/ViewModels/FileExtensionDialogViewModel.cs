@@ -5,17 +5,22 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using FindInFile.Models;
-using FindInFile_Wpf.ViewModels.Commands;
+using FindInFile.Models.Messages;
+using FindInFile.Wpf.ViewModels.Commands;
+using FindInFile.Wpf.Views;
+using FindInFile_Wpf.Interfaces;
+using GalaSoft.MvvmLight.Messaging;
+using SearchAggregatorUtility;
 
-namespace FindInFile_Wpf.ViewModels
+namespace FindInFile.Wpf.ViewModels
 {
     public class FileExtensionDialogViewModel : INotifyPropertyChanged
     {
         public int ColumnCount = 8;
 
-        private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private List<ExtensionCellItem> m_ExtensionGrid;
         private string m_FolderPath;
         private bool m_RecursiveChecked;
@@ -62,15 +67,59 @@ namespace FindInFile_Wpf.ViewModels
 
         public FileExtensionDialogViewModel()
         {
-            //Send request  for the root path to main form view 
-            FolderPath = DEFAULT_ROOT_PATH;
-            //Initialize Commands
-            RetrieveExtensionCommand = new RetrieveExtensionsCommand(this);
+            RetrieveExtensionCommand = new RelayCommand(RetrieveExtensions);
+            OkayCommand = new RelayCommand(ReturnResultsToViewModel);
+            CancelCommand = new RelayCommand(CloseDialog);
+
+            Messenger.Default.Register<FileExtensionDialogInitializationMessage>(this, message => {
+                FolderPath = message.FolderPath;
+                RecursiveChecked = message.RecursiveChecked;
+                Messenger.Default.Unregister<FileExtensionDialogInitializationMessage>(this); //One time message
+            });
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void RetrieveExtensions(object parameter)
+        {
+            var dataGrid = new List<ExtensionCellItem>();
+
+            var extensions = DirectoryExplorer.GetExtensions(m_FolderPath, m_RecursiveChecked).GroupBy(ext => ext).OrderByDescending(ext => ext.Count());
+
+            if (extensions != null && extensions.Count() > 0)
+            {
+                foreach (var extension in extensions)
+                {
+                    dataGrid.Add(new ExtensionCellItem(extension.Key, extension.Count()));
+                }
+
+                ExtensionGrid = dataGrid;
+            }
+        }
+
+        private void ReturnResultsToViewModel(object parameter)
+        {
+            var extensionsList = new List<ExtensionCellItem>();
+            foreach (var extension in m_ExtensionGrid)
+            {
+                if (extension.Include)
+                    extensionsList.Add(extension);
+            }
+
+            Messenger.Default.Send(new ReturnExtensionsMessage(extensionsList));
+            CloseDialog(parameter);
+        }
+
+        private void CloseDialog(object parameter)
+        {
+            if (parameter != null)
+            {
+                IClosable window = parameter as IClosable;
+                window.Close();
+            }  
         }
     }
 }

@@ -37,3 +37,7 @@ https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx
 
 http://stackoverflow.com/questions/17756042/improve-the-performance-for-enumerating-files-and-folders-using-net
 http://cc.davelozinski.com/c-sharp/fastest-way-to-check-if-a-string-occurs-within-a-string
+
+Long Paths
+https://gallery.technet.microsoft.com/DelimonWin32IO-Library-V40-7ff6b16c
+https://github.com/UweKeim/ZetaLongPaths/blob/master/Source/RuntimeNetCore/ZlpPathHelper.cs

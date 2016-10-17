@@ -59,6 +59,8 @@
     <Compile Include="ExtensionCellItem.cs" />
     <Compile Include="ExtensionGridRow.cs" />
     <Compile Include="LineMatch.cs" />
+    <Compile Include="Messages\FileExtensionDialogInitializationMessage.cs" />
+    <Compile Include="Messages\ReturnExtensionsMessage.cs" />
     <Compile Include="SearchMatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

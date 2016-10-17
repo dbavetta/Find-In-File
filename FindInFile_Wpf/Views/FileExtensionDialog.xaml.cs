@@ -11,17 +11,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FindInFile_Wpf.Interfaces;
+using GalaSoft.MvvmLight.Messaging;
 
-namespace FindInFile_Wpf.Views
+namespace FindInFile.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for FileExtensionDialog.xaml
     /// </summary>
-    public partial class FileExtensionDialog : Window
+    public partial class FileExtensionDialog : Window, IClosable
     {
-        public FileExtensionDialog()
+        public Guid m_AuthorizationToken;
+
+        public FileExtensionDialog(Guid authorizationToken)
         {
             InitializeComponent();
+
+            m_AuthorizationToken = authorizationToken;
         }
     }
 }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\App.xaml
-2-714982724
+4-94588063
 
-17636228864
-75-820013952
-MainWindow.xaml;Views\FileExtensionDialog.xaml;
+23762603042
+82650921763
+MainWindow.xaml;Shell.xaml;Views\FileExtensionDialog.xaml;Views\FindTextView.xaml;
 
 False
 

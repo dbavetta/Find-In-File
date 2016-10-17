@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FindInFile.Wpf"
         xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
         xmlns:utilities="clr-namespace:FindInFile.Wpf.Utilities"
+        xmlns:views="clr-namespace:FindInFile.Wpf.Views"
         x:Class="FindInFile.Wpf.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" MinHeight="400" MinWidth="750"
@@ -13,7 +14,6 @@
     <Window.Resources>
         <viewModels:FindTextViewModel x:Key="findTextViewModel"/>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -99,11 +99,11 @@
                         </StackPanel>-->
                     </DataTemplate>
                 </ListView.Resources>
-                <ListView.ItemContainerStyle>
+                <!--<ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <EventSetter Event="MouseDoubleClick" Handler="HandleListViewDoubleClick" />
                     </Style>
-                </ListView.ItemContainerStyle >
+                </ListView.ItemContainerStyle >-->
                 <ListView.View>
                     <GridView>
                         <!-- TODO: When settings are implemented, change path to display either full or shortened path based on what the user has saved-->
@@ -123,7 +123,7 @@
                     <MenuItem Name="DebuggerConsoleStrip">
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <Image Name="DubbugerButton" Source="Resources/Debugger-Icon.png"/>
+                                <Image Name="DubbugerButton" Source="/FindInFile_Wpf;component/Resources/Debugger-Icon.png"/>
                                 <ContentPresenter Content="Debug Data" />
                             </StackPanel>
                         </MenuItem.Header>
@@ -132,5 +132,5 @@
                 </Menu>
             </StatusBar>
         </DockPanel>
-    </Grid>
+        </Grid>
 </Window>

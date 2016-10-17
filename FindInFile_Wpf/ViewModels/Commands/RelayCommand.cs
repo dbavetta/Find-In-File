@@ -15,18 +15,24 @@ namespace FindInFile.Wpf.ViewModels.Commands
     ///     public bool CanExecuteCommand(object parameter) { return true; }
     /// </summary>
 
-    class RelayCommand
+    public class RelayCommand : ICommand
     {
         public delegate void ICommandOnExecute(object parameter);
         public delegate bool ICommandOnCanExecute(object parameter);
 
-        private ICommandOnExecute _execute;
-        private ICommandOnCanExecute _canExecute;
+        private ICommandOnExecute m_Execute;
+        private ICommandOnCanExecute m_CanExecute;
+
+        public RelayCommand(ICommandOnExecute onExecuteMethod)
+        {
+            m_Execute = onExecuteMethod;
+            m_CanExecute = ReturnTrue;
+        }
 
         public RelayCommand(ICommandOnExecute onExecuteMethod, ICommandOnCanExecute onCanExecuteMethod)
         {
-            _execute = onExecuteMethod;
-            _canExecute = onCanExecuteMethod;
+            m_Execute = onExecuteMethod;
+            m_CanExecute = onCanExecuteMethod;
         }
 
         #region ICommand Members
@@ -38,12 +44,17 @@ namespace FindInFile.Wpf.ViewModels.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute.Invoke(parameter);
+            return m_CanExecute.Invoke(parameter);
         }
 
         public void Execute(object parameter)
         {
-            _execute.Invoke(parameter);
+            m_Execute.Invoke(parameter);
+        }
+
+        private bool ReturnTrue(object parameter)
+        {
+            return true;
         }
         #endregion
     }

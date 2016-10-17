@@ -1,16 +1,23 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows.Input;
 using FindInFile.Models;
+using FindInFile.Models.Messages;
 using FindInFile.Wpf.ViewModels.Commands;
+using FindInFile.Wpf.Views;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Modularity;
 
 namespace FindInFile.Wpf.ViewModels
 {
-    public class FindTextViewModel : INotifyPropertyChanged, IModule
+    public class FindTextViewModel : IViewModel, INotifyPropertyChanged, IModule
     {
         private const string DEFAULT_QUERY = "Get-EmpiEnvironment";
         private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
@@ -132,7 +139,7 @@ namespace FindInFile.Wpf.ViewModels
         {
             FindClicked = new FindCommand(this);
             BrowseClick = new BrowseCommand(this);
-            AdvancedClick = new AdvancedCommand(this);
+            AdvancedClick = new RelayCommand(RetrieveExtensions);
 
 #if DEBUG
             QueryText = DEFAULT_QUERY;
@@ -142,8 +149,10 @@ namespace FindInFile.Wpf.ViewModels
             FuzzySearchChecked = true;
             StatusBarText = "Place Holder Text...";
             StatusBarTextColor = "Green";
-            Container = new UnityContainer();
-            //Container.RegisterType<EventAggregator, EventAggregator>();
+
+            Messenger.Default.Register<ReturnExtensionsMessage>(this, message => {
+                MergeFiltersFromMessage(message.Extensions);
+            });
 #endif
         }
 
@@ -161,6 +170,39 @@ namespace FindInFile.Wpf.ViewModels
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void RetrieveExtensions(object parameter)
+        {
+            Guid authorizationToken = Guid.NewGuid();
+            var fileExtensionDialog = new FileExtensionDialog(authorizationToken); //Convert to idisposable so it can be places in a using block
+            fileExtensionDialog.Show();
+
+            Messenger.Default.Send(new FileExtensionDialogInitializationMessage()
+            {
+                FolderPath = m_RootPathText,
+                RecursiveChecked = m_RecursiveChecked
+            }, authorizationToken);
+        }
+
+        private void MergeFiltersFromMessage(List<ExtensionCellItem> extensionsToMerge)
+        {
+            string[] currentExtensions = m_FilterText.Replace(" ", "").Replace("*", "").Split(',');
+            HashSet<string> extensions = new HashSet<string>(currentExtensions);
+            extensions.UnionWith(extensionsToMerge.Select(ext => ext.Extension));
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var extension in extensions)
+            {
+                sb.Append('*');
+                sb.Append(extension);
+                sb.Append(", ");
+            }
+
+            //Remove last ", "
+            sb?.Remove(sb.Length - 2, 2);
+
+            FilterText = sb.ToString();
         }
     }
 }
