@@ -1,0 +1,48 @@
+﻿<Window x:Name="window" x:Class="FindInFile.Wpf.Views.FileExtensionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FindInFile.Wpf.Views"
+        xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
+        mc:Ignorable="d"
+        Title="FileExtensionDialog" Height="400" Width="360" MinHeight="350" MaxWidth="360" MinWidth="360"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <viewModels:FileExtensionDialogViewModel x:Key="FilterExtensionViewModel"/>
+    </Window.Resources>
+    <GroupBox Header="Root Path" Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical">
+                <TextBox Name="FolderPathTextBox" Margin="0, 0, 0, 5" Text="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}"/>
+                <StackPanel Orientation="Horizontal" Margin="0, 0, 5, 0">
+                    <Button Command="{Binding RetrieveExtensionCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}">
+                        <TextBlock Text="Retrieve all file extension types in directory" Margin="2,0"/>
+                    </Button>
+                    <CheckBox Content="Recursive" IsChecked="{Binding RecursiveChecked, Source={StaticResource FilterExtensionViewModel}}" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+            <!--Update Binding matrix-->
+            <DockPanel Grid.Row="1" Margin="0,5">
+                <TextBlock DockPanel.Dock="Top" Text="Extension Types:"/>
+                <DataGrid GridLinesVisibility="None" MinHeight="50" ItemsSource="{Binding ExtensionGrid, Source={StaticResource FilterExtensionViewModel}}"/>
+            </DockPanel>
+            <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,5">
+                <Button Name="OkButton" Margin="5,0" Command="{Binding OkayCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding ElementName=window, Mode=OneWay}">
+                    <TextBlock Text="Ok" Margin="15,0"/>
+                </Button>
+                <Button Name="CancelButton" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Command="{Binding CancelCommand, Source={StaticResource FilterExtensionViewModel}}">
+                    <TextBlock Text="Cancel" Margin="5,0"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </GroupBox>
+</Window>
