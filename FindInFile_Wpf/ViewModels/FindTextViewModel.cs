@@ -8,11 +8,11 @@ using System.Text;
 using System.Windows.Input;
 using FindInFile.Models;
 using FindInFile.Models.Messages;
+using FindInFile.Wpf.Utilities;
 using FindInFile.Wpf.ViewModels.Commands;
 using FindInFile.Wpf.Views;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.Unity;
-using Prism.Events;
 using Prism.Modularity;
 
 namespace FindInFile.Wpf.ViewModels
@@ -23,7 +23,8 @@ namespace FindInFile.Wpf.ViewModels
         private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private const string DEFAULT_FILTER = "*.ps1, *.psd1, *.psm1, *.cs, *.cshtml, *.html, *.txt, *.js";
         private ObservableCollection<SearchMatch> m_MatchList;
-        private SubscriptionToken subscriptionToken;
+        private Guid m_AuthToken;
+        //private SubscriptionToken subscriptionToken;
         public IUnityContainer Container { get; private set; }
 
         #region Find Group Private Members
@@ -141,24 +142,30 @@ namespace FindInFile.Wpf.ViewModels
             BrowseClick = new BrowseCommand(this);
             AdvancedClick = new RelayCommand(RetrieveExtensions);
 
-#if DEBUG
-            QueryText = DEFAULT_QUERY;
-            RootPathText = DEFAULT_ROOT_PATH;
-            FilterText = DEFAULT_FILTER;
-            RecursiveChecked = true;
-            FuzzySearchChecked = true;
-            StatusBarText = "Place Holder Text...";
-            StatusBarTextColor = "Green";
+            //Messenger.Default.Register<TabManagerConstructedMessage>(this, message => {
+            //    Initialize();
+            //    Messenger.Default.Unregister(TabManagerConstructedMessage);
+            //});
 
-            Messenger.Default.Register<ReturnExtensionsMessage>(this, message => {
-                MergeFiltersFromMessage(message.Extensions);
-            });
+#if DEBUG
+            //QueryText = DEFAULT_QUERY;
+            //RootPathText = DEFAULT_ROOT_PATH;
+            //FilterText = DEFAULT_FILTER;
+            //RecursiveChecked = true;
+            //FuzzySearchChecked = true;
+            //StatusBarText = "Place Holder Text...";
+            //StatusBarTextColor = "Green";
 #endif
         }
 
+        //Maybe use another message (TabManagerConstructedMessage) when the TabManager has exited the construction, than call this initalize
         public void Initialize()
         {
-            
+            m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
+
+            Messenger.Default.Register<ReturnExtensionsMessage>(this, m_AuthToken, message => {
+                MergeFiltersFromMessage(message.Extensions);
+            });
         }
 
         public void UpdateStatusBar(string text, string color = "Green")
@@ -175,14 +182,14 @@ namespace FindInFile.Wpf.ViewModels
         private void RetrieveExtensions(object parameter)
         {
             Guid authorizationToken = Guid.NewGuid();
-            var fileExtensionDialog = new FileExtensionDialog(authorizationToken); //Convert to idisposable so it can be places in a using block
+            var fileExtensionDialog = new FileExtensionDialog(); //Convert to idisposable so it can be places in a using block
             fileExtensionDialog.Show();
 
             Messenger.Default.Send(new FileExtensionDialogInitializationMessage()
             {
                 FolderPath = m_RootPathText,
                 RecursiveChecked = m_RecursiveChecked
-            }, authorizationToken);
+            }, m_AuthToken);
         }
 
         private void MergeFiltersFromMessage(List<ExtensionCellItem> extensionsToMerge)

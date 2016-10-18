@@ -1,6 +1,6 @@
 using GalaSoft.MvvmLight;
 
-namespace FindInFile_Wpf.ViewModel
+namespace FindInFile.Wpf.ViewModels
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.

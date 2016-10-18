@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FindInFile.Wpf.Views"
              xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
-             xmlns:utilities="clr-namespace:FindInFile.Wpf.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -25,10 +24,10 @@
         <GroupBox Header="Find What:" Margin="5,5,2.5,5">
             <StackPanel Orientation="Vertical" Margin="5">
                 <DockPanel>
-                    <TextBox x:Name="queryTextBox" Height="20" Text="{Binding QueryText, Source={StaticResource findTextViewModel}}"/>
+                    <TextBox x:Name="queryTextBox" Height="20" Text="{Binding QueryText}"/>
                 </DockPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10">
-                    <Button x:Name="findButton" Command="{Binding FindClicked, Source={StaticResource findTextViewModel}}" Background="#FF9FF967">
+                    <Button x:Name="findButton" Command="{Binding FindClicked}" Background="#FF9FF967">
                         <TextBlock Text="FIND" Margin="15,5" FontWeight="Bold" Foreground="#FF198005"/>
                     </Button>
                     <!-- Search Options CheckBox Grid-->
@@ -41,10 +40,10 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" Grid.Row="0" x:Name="recursiveCheckBox" Content="Recursive" IsChecked="{Binding RecursiveChecked, Source={StaticResource findTextViewModel}}" Margin="10,0,10,0"/>
-                        <CheckBox Grid.Column="0" Grid.Row="1" x:Name="fuzzySearchCheckBox" Content="Fuzzy Search" IsChecked="{Binding FuzzySearchChecked, Source={StaticResource findTextViewModel}}" Margin="10,5,10,0"/>
-                        <CheckBox Grid.Column="1" Grid.Row="0" x:Name="matchCaseCheckBox" Content="Match Case" IsChecked="{Binding MatchCaseChecked, Source={StaticResource findTextViewModel}}" Margin="0,0,0,0"/>
-                        <CheckBox Grid.Column="1" Grid.Row="1" x:Name="copyToClipboardCheckBox" Content="Copy Search To Clipboard" IsChecked="{Binding CopyToClipboardChecked, Source={StaticResource findTextViewModel}}" Margin="0,5,0,0"/>
+                        <CheckBox Grid.Column="0" Grid.Row="0" x:Name="recursiveCheckBox" Content="Recursive" IsChecked="{Binding RecursiveChecked}" Margin="10,0,10,0"/>
+                        <CheckBox Grid.Column="0" Grid.Row="1" x:Name="fuzzySearchCheckBox" Content="Fuzzy Search" IsChecked="{Binding FuzzySearchChecked}" Margin="10,5,10,0"/>
+                        <CheckBox Grid.Column="1" Grid.Row="0" x:Name="matchCaseCheckBox" Content="Match Case" IsChecked="{Binding MatchCaseChecked}" Margin="0,0,0,0"/>
+                        <CheckBox Grid.Column="1" Grid.Row="1" x:Name="copyToClipboardCheckBox" Content="Copy Search To Clipboard" IsChecked="{Binding CopyToClipboardChecked}" Margin="0,5,0,0"/>
                     </Grid>
                 </StackPanel>
             </StackPanel>
@@ -53,25 +52,25 @@
             <!-- Folder Path Group -->
             <GroupBox Header="Folder Path" DockPanel.Dock="Top">
                 <DockPanel Margin="5">
-                    <Button x:Name="browseFolderPathButton" DockPanel.Dock="Right" Margin="5,0,0,0" Command="{Binding BrowseClick, Source={StaticResource findTextViewModel}}">
+                    <Button x:Name="browseFolderPathButton" DockPanel.Dock="Right" Margin="5,0,0,0" Command="{Binding BrowseClick}">
                         <TextBlock Text="Browse" Margin="5,0"/>
                     </Button>
-                    <TextBox x:Name="rootPathTextBox" Height="20" Text="{Binding RootPathText, Source={StaticResource findTextViewModel}}" />
+                    <TextBox x:Name="rootPathTextBox" Height="20" Text="{Binding RootPathText}" />
                 </DockPanel>
             </GroupBox>
             <!-- filter Group -->
             <GroupBox Header="Filter">
                 <DockPanel Margin="5">
-                    <Button x:Name="advancedFilterButton" DockPanel.Dock="Right" Margin="5,0,0,0" Command="{Binding AdvancedClick, Source={StaticResource findTextViewModel}}">
+                    <Button x:Name="advancedFilterButton" DockPanel.Dock="Right" Margin="5,0,0,0" Command="{Binding AdvancedClick}">
                         <TextBlock Text="Advanced" Margin="5,0"/>
                     </Button>
-                    <TextBox x:Name="filterTextBox" Height="20" Text="{Binding FilterText, Source={StaticResource findTextViewModel}}" />
+                    <TextBox x:Name="filterTextBox" Height="20" Text="{Binding FilterText}" />
                 </DockPanel>
             </GroupBox>
         </DockPanel>
         <DockPanel Grid.Row ="1" Grid.ColumnSpan="2" Margin="5">
             <ListView x:Name="resultsListView" 
-                      ItemsSource="{Binding MatchList, Source={StaticResource findTextViewModel}}">
+                      ItemsSource="{Binding MatchList}">
                 <ListView.Resources>
                     <!--Template to highlight and display the matched text-->
                     <DataTemplate x:Key="LineMatchtemplate">
@@ -114,7 +113,7 @@
         </DockPanel>
         <DockPanel x:Name="statusBarDockPanel" Grid.Row="2" Grid.ColumnSpan="2">
             <StatusBar DockPanel.Dock="Bottom" >
-                <TextBlock Name="statusBarTextBlock" Text="{Binding StatusBarText, Source={StaticResource findTextViewModel}}" Margin="5,0" Foreground="{Binding StatusBarTextColor, Source={StaticResource findTextViewModel}}"/>
+                <TextBlock Name="statusBarTextBlock" Text="{Binding StatusBarText}" Margin="5,0" Foreground="{Binding StatusBarTextColor}"/>
                 <Separator/>
                 <Menu>
                     <MenuItem Name="DebuggerConsoleStrip">

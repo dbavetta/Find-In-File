@@ -1,18 +1,14 @@
 ﻿
 [~] | Convert to WPF application instead of windows forms 
-[~] | Dynamically generate checkboxs for every file type found in directy path -> allow the user to check additional search filters
 [ ] | Investigate SearchExtensions method for performance reasons and transition to use Regex.IsMatch instead of IndexOf
-[ ] | implement tabular search
 [ ] | save directory search results in cache (filter dialog) so the application doesnt waste time processing the same search twice
-[ ] | implement *.* filter compatibility
-[ ] | add exclude filetype/path if *.* ever gets working..
+[~] | implement *.* filter compatibility TODO: Improve performance
+[ ] | add exclude ext type
 [ ] | implement pause/stop search
 [ ] | implement match content preview (x lines about match, y lines below [saved in settings])
 [ ] | Implement multi directory search (entirely different/unrelated folders)
 [ ] | date filter?
-[ ] | Get the damn filter dialog done.....
 [ ] | Account for read file permissions
-[ ] | TURN SEARCH AGGREGATOR INTO A CLASS LIBRARY (dll) AND ADD REFERENCE TO PROJECT
 [ ] | IMPLEMENT .Net tasking so the UI doesnt hang while waiting for results to be returned (mainly when useing full wild card search *.* )
 [ ] | Collapse group boxes 
 [ ] | Dropdown textboxs with history

@@ -123,6 +123,7 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\TabManagerUtility.cs" />
     <Compile Include="Utilities\ThreadSafeOperations.cs" />
     <Compile Include="ViewModels\Commands\BaseCommand.cs" />
     <Compile Include="ViewModels\Commands\BrowseCommand.cs" />
@@ -131,8 +132,9 @@
     <Compile Include="ViewModels\FileExtensionDialogViewModel.cs" />
     <Compile Include="ViewModels\FindTextViewModel.cs" />
     <Compile Include="ViewModels\IViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\FileExtensionDialog.xaml.cs">
       <DependentUpon>FileExtensionDialog.xaml</DependentUpon>
     </Compile>

@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Controls;
-using System.Windows.Input;
-using FindInFile.Models;
-using FindInFile.Wpf.ViewModels;
+﻿using System.Windows.Controls;
 
 namespace FindInFile.Wpf.Views
 {
@@ -11,13 +7,9 @@ namespace FindInFile.Wpf.Views
     /// </summary>
     public partial class FindTextView : UserControl
     {
-        // Open File
-        private void HandleListViewDoubleClick(object sender, MouseButtonEventArgs e)
+        public FindTextView()
         {
-            SearchMatch match = ((ListViewItem)sender).Content as SearchMatch;
-
-            if (match != null && !string.IsNullOrEmpty(match.Path))
-                Process.Start(match.Path);
+            InitializeComponent();
         }
     }
 }

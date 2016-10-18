@@ -27,8 +27,8 @@ namespace FindInFile.Wpf.Modules
 
             //m_RegionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(FindTextView));
 
-            var v = m_container.Resolve<FindTextView>();
-            m_RegionManager.Regions[RegionNames.MainRegion].Add(v);
+            //var v = m_container.Resolve<FindTextView>();
+            //m_RegionManager.Regions[RegionNames.MainRegion].Add(v);
         }
     }
 }

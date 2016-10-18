@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindInFile_Wpf.Interfaces
+namespace FindInFile.Wpf.Interfaces
 {
     public interface IClosable
     {

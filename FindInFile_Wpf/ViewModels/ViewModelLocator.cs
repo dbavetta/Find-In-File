@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:FindInFile_Wpf"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:FindInFile.Wpf"
                            x:Key="Locator" />
   </Application.Resources>
   
@@ -16,7 +16,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
-namespace FindInFile_Wpf.ViewModel
+namespace FindInFile.Wpf.ViewModels
 {
     /// <summary>
     /// This class contains static references to all the view models in the

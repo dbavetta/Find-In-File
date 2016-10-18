@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using FindInFile.Models;
 using FindInFile.Models.Messages;
+using FindInFile.Wpf.Interfaces;
+using FindInFile.Wpf.Utilities;
 using FindInFile.Wpf.ViewModels.Commands;
-using FindInFile.Wpf.Views;
-using FindInFile_Wpf.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
 using SearchAggregatorUtility;
 
@@ -71,7 +68,9 @@ namespace FindInFile.Wpf.ViewModels
             OkayCommand = new RelayCommand(ReturnResultsToViewModel);
             CancelCommand = new RelayCommand(CloseDialog);
 
-            Messenger.Default.Register<FileExtensionDialogInitializationMessage>(this, message => {
+            Guid authToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
+
+            Messenger.Default.Register<FileExtensionDialogInitializationMessage>(this, authToken, message => {
                 FolderPath = message.FolderPath;
                 RecursiveChecked = message.RecursiveChecked;
                 Messenger.Default.Unregister<FileExtensionDialogInitializationMessage>(this); //One time message
