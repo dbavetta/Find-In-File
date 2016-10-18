@@ -118,7 +118,6 @@ namespace Advanced_File_Search
             queryResultsListView.Items.Clear();
             debuggerDataStatusStrip.DropDownItems.Clear();
 
-            // Retrieve search content from form
             string query = queryTextBox.Text;
             string extensionFilter = filterTextBox.Text;
             string rootPath = rootDirectoryTextBox.Text;

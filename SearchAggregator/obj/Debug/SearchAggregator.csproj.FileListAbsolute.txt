@@ -1,7 +1,0 @@
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\bin\Debug\SearchAggregator.dll
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\bin\Debug\SearchAggregator.pdb
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\obj\Debug\SearchAggregator.dll
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\obj\Debug\SearchAggregator.pdb
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\obj\Debug\SearchAggregator.csprojResolveAssemblyReference.cache
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\bin\Debug\FindInFile.Models.dll
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\bin\Debug\FindInFile.Models.pdb
