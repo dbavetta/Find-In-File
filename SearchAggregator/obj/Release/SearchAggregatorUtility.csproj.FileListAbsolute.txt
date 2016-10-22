@@ -1,0 +1,8 @@
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Release\SearchAggregator.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Release\SearchAggregator.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Release\Delimon.Win32.IO.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Release\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Release\FindInFile.Models.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Release\SearchAggregatorUtility.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Release\SearchAggregator.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Release\SearchAggregator.pdb

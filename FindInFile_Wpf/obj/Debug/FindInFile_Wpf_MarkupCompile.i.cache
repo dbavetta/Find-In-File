@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\obj\Debug\
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\
 FindInFile_Wpf
 none
 false
 DEBUG;TRACE
-C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile_Wpf\App.xaml
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\App.xaml
 4-94588063
 
-29-588113781
-82650921763
+30-1868543256
+82-1932274100
 MainWindow.xaml;Shell.xaml;Views\FileExtensionDialog.xaml;Views\FindTextView.xaml;
 
-True
+False
 

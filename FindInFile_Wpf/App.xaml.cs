@@ -1,4 +1,8 @@
 ﻿using System.Windows;
+using FindInFile.Models.Messages;
+using FindInFile.Wpf.Utilities;
+using FindInFile.Wpf.ViewModels;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace FindInFile.Wpf
 {
@@ -10,6 +14,8 @@ namespace FindInFile.Wpf
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            TabManager<FindTextViewModel>.Instance.Initialize();
+            Messenger.Default.Send(new TabManagerInitializedMessage());
             //Bootstrapper bootstrapper = new Bootstrapper();
             //bootstrapper.Run();
         }

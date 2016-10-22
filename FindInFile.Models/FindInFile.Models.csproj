@@ -61,6 +61,7 @@
     <Compile Include="LineMatch.cs" />
     <Compile Include="Messages\FileExtensionDialogInitializationMessage.cs" />
     <Compile Include="Messages\ReturnExtensionsMessage.cs" />
+    <Compile Include="Messages\TabManagerInitializedMessage.cs" />
     <Compile Include="Messages\UpdateTabControlMessage.cs" />
     <Compile Include="SearchMatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

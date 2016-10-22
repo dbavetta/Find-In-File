@@ -1,0 +1,10 @@
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\FindInFile.Models.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\Castle.Core.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\Castle.DynamicProxy2.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\ClaySharp.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\log4net.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Release\log4net.xml
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Release\FindInFile.Models.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Release\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Release\FindInFile.Models.pdb

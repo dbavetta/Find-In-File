@@ -8,3 +8,13 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Find
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\bin\Debug\log4net.dll
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\bin\Debug\log4net.xml
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\FindInFile.Models\obj\Debug\FindInFile.Models.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\FindInFile.Models.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\Castle.Core.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\Castle.DynamicProxy2.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\ClaySharp.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\log4net.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\log4net.xml
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.pdb

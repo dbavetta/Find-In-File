@@ -16,18 +16,28 @@ namespace FindInFile.Wpf.Utilities
 
         private TabManager()
         {
-            InitializeTabUtility();
         }
 
         public static TabManager<ViewModel> Instance { get { return m_Instance.Value; } }
         #endregion
 
+        private bool m_Initialized = false;
         private const string TAB_HEADER = "Text Explorer";
         private ObservableCollection<TabObject<ViewModel>> m_ViewModelCollection;
         private Dictionary<int, Guid> m_TabTokenAssociation;
         private TabObject<ViewModel> m_LastTab;
         private TabObject<ViewModel> m_PlusTab;
         private TabObject<ViewModel> m_ActiveTab;
+
+        public bool Initialized
+        {
+            get { return m_Initialized; }
+        }
+
+        public void Initialize()
+        {
+            BuildDefaultState();
+        }
 
         public TabObject<ViewModel> ActiveTab
         {
@@ -78,14 +88,10 @@ namespace FindInFile.Wpf.Utilities
             return m_TabTokenAssociation[m_ActiveTab.Index];
         }
 
-        private void InitializeTabUtility()
+        private void BuildDefaultState()
         {
             m_ViewModelCollection = new ObservableCollection<TabObject<ViewModel>>();
             m_TabTokenAssociation = new Dictionary<int, Guid>();
-
-            var type = typeof(ViewModel);
-            object _viewModel = Activator.CreateInstance(type);
-            ViewModel viewModel = (ViewModel)_viewModel;
 
             var baseTab = CreateNewTabObject();
             var plusTab = CreateNewTabObject("+");
@@ -97,6 +103,7 @@ namespace FindInFile.Wpf.Utilities
 
             m_ActiveTab = m_LastTab = m_ViewModelCollection.First();
             m_PlusTab = m_ViewModelCollection.Last();
+            m_Initialized = true;
         }
 
         private TabObject<ViewModel> CreateNewTabObject(string header = null)

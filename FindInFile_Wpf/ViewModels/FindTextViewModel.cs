@@ -17,15 +17,11 @@ using Prism.Modularity;
 
 namespace FindInFile.Wpf.ViewModels
 {
-    public class FindTextViewModel : IViewModel, INotifyPropertyChanged, IModule
+    public class FindTextViewModel : IViewModel, INotifyPropertyChanged
     {
         private const string DEFAULT_QUERY = "Get-EmpiEnvironment";
         private const string DEFAULT_ROOT_PATH = @"C:\Users\D760026\Documents\WindowsPowerShell";
         private const string DEFAULT_FILTER = "*.ps1, *.psd1, *.psm1, *.cs, *.cshtml, *.html, *.txt, *.js";
-        private ObservableCollection<SearchMatch> m_MatchList;
-        private Guid m_AuthToken;
-        //private SubscriptionToken subscriptionToken;
-        public IUnityContainer Container { get; private set; }
 
         #region Find Group Private Members
         private string m_QueryText;
@@ -47,6 +43,8 @@ namespace FindInFile.Wpf.ViewModels
         #endregion
 
         #region Window Private Members
+        private ObservableCollection<SearchMatch> m_MatchList;
+        private Guid m_AuthToken;
         private string m_StatusBarText;
         private string m_StatusBarTextColor;
         #endregion
@@ -138,40 +136,49 @@ namespace FindInFile.Wpf.ViewModels
 
         public FindTextViewModel()
         {
-            FindClicked = new FindCommand(this);
-            BrowseClick = new BrowseCommand(this);
-            AdvancedClick = new RelayCommand(RetrieveExtensions);
-
-            //Messenger.Default.Register<TabManagerConstructedMessage>(this, message => {
-            //    Initialize();
-            //    Messenger.Default.Unregister(TabManagerConstructedMessage);
-            //});
-
-#if DEBUG
-            //QueryText = DEFAULT_QUERY;
-            //RootPathText = DEFAULT_ROOT_PATH;
-            //FilterText = DEFAULT_FILTER;
-            //RecursiveChecked = true;
-            //FuzzySearchChecked = true;
-            //StatusBarText = "Place Holder Text...";
-            //StatusBarTextColor = "Green";
-#endif
-        }
-
-        //Maybe use another message (TabManagerConstructedMessage) when the TabManager has exited the construction, than call this initalize
-        public void Initialize()
-        {
-            m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
-
-            Messenger.Default.Register<ReturnExtensionsMessage>(this, m_AuthToken, message => {
-                MergeFiltersFromMessage(message.Extensions);
-            });
+            /* ------------------------------------------------------------------------
+             * Since we create instances of this class in the TabManager Constructor
+             * we need to wait until the TabManager is fully initialzed before we 
+             * call Initialize() as the method uses TabManager to resolve the auth
+             * token for this view model instance, i.e we can resolve it if the class
+             * isnt fully contructed yet. 
+             ------------------------------------------------------------------------ */
+            if (TabManager<FindTextViewModel>.Instance.Initialized == false)
+            {
+                Messenger.Default.Register<TabManagerInitializedMessage>(this, message =>
+                {
+                    Initialize();
+                    Messenger.Default.Unregister(this);
+                });
+            }
+            else
+            {
+                Initialize();
+            }
         }
 
         public void UpdateStatusBar(string text, string color = "Green")
         {
             StatusBarText = text;
             StatusBarTextColor = color;
+        }
+
+        public void Initialize()
+        {
+#if DEBUG
+            QueryText = DEFAULT_QUERY;
+            RootPathText = DEFAULT_ROOT_PATH;
+            FilterText = DEFAULT_FILTER;
+            RecursiveChecked = true;
+            FuzzySearchChecked = true;
+            StatusBarText = "Place Holder Text...";
+            StatusBarTextColor = "Green";
+#endif
+            FindClicked = new FindCommand(this);
+            BrowseClick = new BrowseCommand(this);
+            AdvancedClick = new RelayCommand(RetrieveExtensions);
+
+            m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -181,21 +188,31 @@ namespace FindInFile.Wpf.ViewModels
 
         private void RetrieveExtensions(object parameter)
         {
-            Guid authorizationToken = Guid.NewGuid();
             var fileExtensionDialog = new FileExtensionDialog(); //Convert to idisposable so it can be places in a using block
-            fileExtensionDialog.Show();
+            //fileExtensionDialog.Owner = this;
+
+            Messenger.Default.Register<ReturnExtensionsMessage>(this, m_AuthToken, (message) => 
+            {
+                MergeFiltersFromMessage(message.Extensions);
+            });
 
             Messenger.Default.Send(new FileExtensionDialogInitializationMessage()
             {
                 FolderPath = m_RootPathText,
                 RecursiveChecked = m_RecursiveChecked
             }, m_AuthToken);
+
+            fileExtensionDialog.ShowDialog();
         }
 
         private void MergeFiltersFromMessage(List<ExtensionCellItem> extensionsToMerge)
         {
-            string[] currentExtensions = m_FilterText.Replace(" ", "").Replace("*", "").Split(',');
-            HashSet<string> extensions = new HashSet<string>(currentExtensions);
+            HashSet<string> extensions = new HashSet<string>();
+            if (!string.IsNullOrEmpty(m_FilterText))
+            {
+                string[] currentExtensions = m_FilterText.Replace(" ", "").Replace("*", "").Split(',');
+                extensions = new HashSet<string>(currentExtensions);
+            }
             extensions.UnionWith(extensionsToMerge.Select(ext => ext.Extension));
 
             StringBuilder sb = new StringBuilder();

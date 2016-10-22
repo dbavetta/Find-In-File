@@ -6,3 +6,11 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Sear
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\obj\Debug\SearchAggregator.dll
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\obj\Debug\SearchAggregator.pdb
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\SearchAggregator\bin\Debug\Delimon.Win32.IO.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\SearchAggregator.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\SearchAggregator.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\Delimon.Win32.IO.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\FindInFile.Models.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\FindInFile.Models.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregatorUtility.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregator.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregator.pdb
