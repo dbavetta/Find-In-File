@@ -8,5 +8,6 @@ namespace FindInFile.Wpf.ViewModels
 {
     public interface IViewModel
     {
+        void Initialize();
     }
 }

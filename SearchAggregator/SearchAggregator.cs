@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using FindInFile.Models;
 
@@ -22,7 +23,7 @@ namespace SearchAggregatorUtility
         //END
 
         private ConcurrentBag<SearchMatch> m_MatchList;
-        private IEnumerable<string> m_FilesToSearch;
+        private List<string> m_FilesToSearch;
         private bool m_SingleFile = true;
 
         public SearchAggregator(string query, bool fuzzySearch = true, bool matchCase = false, bool copyToClipboard = false)
@@ -34,6 +35,22 @@ namespace SearchAggregatorUtility
             m_MatchList = new ConcurrentBag<SearchMatch>();
         }
 
+        public async Task<List<SearchMatch>> SearchFileSetAsync(List<string> filesToSearch)
+        {
+            m_SingleFile = false;
+            m_FilesToSearch = filesToSearch;
+
+            if (!m_MatchList.IsEmpty)
+                m_MatchList = new ConcurrentBag<SearchMatch>();
+
+            await Task.Run(() =>
+            {
+                m_FilesToSearch.ForEach(currentFile => SearchFile(currentFile));
+            });
+
+            return m_MatchList.ToList();
+        }
+
         public List<SearchMatch> SearchFileSet(List<string> filesToSearch)
         {
             m_SingleFile = false;
@@ -42,10 +59,34 @@ namespace SearchAggregatorUtility
             if (!m_MatchList.IsEmpty)
                 m_MatchList = new ConcurrentBag<SearchMatch>();
 
-            m_FilesToSearch.AsParallel().ForAll(currentFilePath => {
-
+            m_FilesToSearch.AsParallel().ForAll(currentFilePath =>
+            {
                 SearchFile(currentFilePath);
             });
+
+            return m_MatchList.ToList();
+        }
+
+        public async Task<List<SearchMatch>> SearchFileAsync(string filePath)
+        {
+            if (m_SingleFile && !m_MatchList.IsEmpty)
+            {
+                m_FilesToSearch.Add(filePath);
+                m_MatchList = new ConcurrentBag<SearchMatch>();
+            }
+
+            List<SearchMatch> matches = new List<SearchMatch>();
+            await Task.Run(() => { matches = FindMatchesInFile(filePath, m_Query, m_FuzzySearch, m_matchCase); });
+
+            if (matches.Count > 0)
+            {
+                foreach (var match in matches)
+                    m_MatchList.Add(match);
+
+                // Copy searched for text to system clipboard
+                //if (m_CopyToClipboard)
+                //    Clipboard.SetText(m_Query);
+            }
 
             return m_MatchList.ToList();
         }
@@ -53,7 +94,10 @@ namespace SearchAggregatorUtility
         public List<SearchMatch> SearchFile(string filePath)
         {
             if (m_SingleFile && !m_MatchList.IsEmpty)
+            {
+                m_FilesToSearch.Add(filePath);
                 m_MatchList = new ConcurrentBag<SearchMatch>();
+            }
 
             List<SearchMatch> matches = FindMatchesInFile(filePath, m_Query, m_FuzzySearch, m_matchCase);
 
@@ -66,7 +110,7 @@ namespace SearchAggregatorUtility
                 //if (m_CopyToClipboard)
                 //    Clipboard.SetText(m_Query);
             }
-
+            
             return m_MatchList.ToList();
         }
 

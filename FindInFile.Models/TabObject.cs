@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace FindInFile.Models
 {
-    public class TabObject<ViewModel>
+    public class TabObject<T>
     {
         public int Index { get; set; }
         public string Header { get; set; }
-        public ViewModel Content { get; set; }
+        public T Content { get; set; }
         public TabObject()
         {
 
         }
 
-        public bool Equals(TabObject<ViewModel> tab)
+        public bool Equals(TabObject<T> tab)
         {
             bool equals = false;
             equals = this.Index == tab.Index;

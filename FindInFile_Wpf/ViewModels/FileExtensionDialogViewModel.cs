@@ -14,17 +14,21 @@ using SearchAggregatorUtility;
 
 namespace FindInFile.Wpf.ViewModels
 {
-    public class FileExtensionDialogViewModel : INotifyPropertyChanged
+    public class FileExtensionDialogViewModel : INotifyPropertyChanged, IViewModel
     {
         public int ColumnCount = 8;
 
+        #region Private Properties
         private List<ExtensionCellItem> m_ExtensionGrid;
         private string m_FolderPath;
         private bool m_RecursiveChecked;
         private ICommand m_RetrieveExtentionsCommand;
         private ICommand m_OkayCommand;
         private ICommand m_CancelCommand;
+        private Guid m_AuthToken;
+        #endregion
 
+        #region Public Properties
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<ExtensionCellItem> ExtensionGrid
@@ -61,16 +65,22 @@ namespace FindInFile.Wpf.ViewModels
             get { return m_CancelCommand; }
             set { m_CancelCommand = value; }
         }
+        #endregion
 
         public FileExtensionDialogViewModel()
         {
+            Initialize();
+        }
+
+        public void Initialize()
+        {
+            m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
+
             RetrieveExtensionCommand = new RelayCommand(RetrieveExtensions);
             OkayCommand = new RelayCommand(ReturnResultsToViewModel);
             CancelCommand = new RelayCommand(CloseDialog);
 
-            Guid authToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
-
-            Messenger.Default.Register<FileExtensionDialogInitializationMessage>(this, authToken, message => {
+            Messenger.Default.Register<FileExtensionDialogInitializationMessage>(this, m_AuthToken, message => {
                 FolderPath = message.FolderPath;
                 RecursiveChecked = message.RecursiveChecked;
                 Messenger.Default.Unregister<FileExtensionDialogInitializationMessage>(this); //One time message
@@ -108,7 +118,7 @@ namespace FindInFile.Wpf.ViewModels
                     extensionsList.Add(extension);
             }
 
-            Messenger.Default.Send(new ReturnExtensionsMessage(extensionsList));
+            Messenger.Default.Send(new ReturnExtensionsMessage(extensionsList), m_AuthToken);
             CloseDialog(parameter);
         }
 

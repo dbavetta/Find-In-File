@@ -18,7 +18,7 @@ namespace FindInFile.Wpf.ViewModels.Commands
         }
 
         #region ICommand Members
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             string query = m_FindTextViewModel.QueryText;
             string rootPath = m_FindTextViewModel.RootPathText;
@@ -29,11 +29,12 @@ namespace FindInFile.Wpf.ViewModels.Commands
             bool copyToClipboard = m_FindTextViewModel.CopyToClipboardChecked;
 
             //debuggerDataStatusStrip.DropDownItems.Clear();
+            m_FindTextViewModel.UpdateStatusBar("Searching...");
             try
             {
                 var searchAggregator = new SearchAggregator(query, fuzzySearch, matchCase, copyToClipboard);
                 var filepaths = DirectoryExplorer.GetFilePaths(rootPath, recursive, extensionFilter).ToList();
-                var matches = searchAggregator.SearchFileSet(filepaths);
+                var matches = await searchAggregator.SearchFileSetAsync(filepaths);
                 m_FindTextViewModel.MatchList = new ObservableCollection<SearchMatch>(matches);
             }
             catch (DirectoryNotFoundException)
