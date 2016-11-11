@@ -8,3 +8,13 @@ C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Adva
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Release\Advanced File Search.exe
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Release\Advanced File Search.pdb
 C:\Users\D760026\Documents\Visual Studio 2015\Projects\Advanced File Search\Advanced File Search\obj\Release\FindInFile.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\bin\Release\Advanced File Search.exe.config
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\bin\Release\Advanced File Search.exe
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\bin\Release\Advanced File Search.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\FindInFile.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\Advanced_File_Search.FilterDialog.resources
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\Advanced_File_Search.SearchForm.resources
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\Advanced_File_Search.Properties.Resources.resources
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\FindInFile.csproj.GenerateResource.Cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\Advanced File Search.exe
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Release\Advanced File Search.pdb

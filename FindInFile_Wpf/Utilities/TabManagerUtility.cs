@@ -14,9 +14,7 @@ namespace FindInFile.Wpf.Utilities
         private static readonly Lazy<TabManager<ViewModel>> m_Instance =
             new Lazy<TabManager<ViewModel>>(() => new TabManager<ViewModel>());
 
-        private TabManager()
-        {
-        }
+        private TabManager() { }
 
         public static TabManager<ViewModel> Instance { get { return m_Instance.Value; } }
         #endregion

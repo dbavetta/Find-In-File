@@ -22,6 +22,7 @@ namespace FindInFile.Wpf.ViewModels
         private List<ExtensionCellItem> m_ExtensionGrid;
         private string m_FolderPath;
         private bool m_RecursiveChecked;
+        private bool m_hasReturnItems;
         private ICommand m_RetrieveExtentionsCommand;
         private ICommand m_OkayCommand;
         private ICommand m_CancelCommand;
@@ -47,6 +48,12 @@ namespace FindInFile.Wpf.ViewModels
         {
             get { return m_RecursiveChecked; }
             set { m_RecursiveChecked = value; NotifyPropertyChanged(); }
+        }
+
+        public bool HasReturnItems
+        {
+            get { return m_hasReturnItems; }
+            set { m_hasReturnItems = value; NotifyPropertyChanged(); }
         }
 
         public ICommand RetrieveExtensionCommand
@@ -106,6 +113,7 @@ namespace FindInFile.Wpf.ViewModels
                 }
 
                 ExtensionGrid = dataGrid;
+                HasReturnItems = true;
             }
         }
 

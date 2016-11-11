@@ -11,5 +11,10 @@ namespace FindInFile.Wpf.Views
         {
             InitializeComponent();
         }
+
+        private void OnmatchesDataGridMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
+        }
     }
 }

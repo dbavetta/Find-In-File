@@ -15,6 +15,5 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\Castl
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\ClaySharp.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\log4net.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\bin\Debug\log4net.xml
-C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.csprojResolveAssemblyReference.cache
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile.Models\obj\Debug\FindInFile.Models.pdb

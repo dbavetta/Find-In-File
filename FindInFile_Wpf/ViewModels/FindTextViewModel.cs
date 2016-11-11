@@ -47,12 +47,19 @@ namespace FindInFile.Wpf.ViewModels
         private Guid m_AuthToken;
         private string m_StatusBarText;
         private string m_StatusBarTextColor;
+        private bool m_QueryProvided;
+        private ICommand m_OpenFileCommand;
         #endregion
 
         #region Find Group Public Members
         public string QueryText {
             get { return m_QueryText; }
-            set { m_QueryText = value; NotifyPropertyChanged(); }
+            set
+            {
+                m_QueryText = value;
+                QueryProvided = !string.IsNullOrEmpty(value);
+                NotifyPropertyChanged();
+            }
         }
 
         public bool RecursiveChecked {
@@ -91,7 +98,7 @@ namespace FindInFile.Wpf.ViewModels
             set { m_FilterText = value; NotifyPropertyChanged(); }
         }
 
-        public ICommand AdvancedClick
+        public ICommand AdvancedClicked
         {
             get { return m_AdvancedClick; }
             set { m_AdvancedClick = value; }
@@ -105,7 +112,7 @@ namespace FindInFile.Wpf.ViewModels
             set { m_RootPathText = value; NotifyPropertyChanged(); }
         }
 
-        public ICommand BrowseClick
+        public ICommand BrowseClicked
         {
             get { return m_BrowseClick; }
             set { m_BrowseClick = value; }
@@ -118,7 +125,12 @@ namespace FindInFile.Wpf.ViewModels
         public ObservableCollection<SearchMatch> MatchList
         {
             get { return m_MatchList; }
-            set { m_MatchList = value; NotifyPropertyChanged(); }
+            set
+            {
+                m_MatchList = value;
+                if (m_MatchList.Any()) QueryProvided = true;
+                NotifyPropertyChanged();
+            }
         }
 
         public string StatusBarText
@@ -131,6 +143,18 @@ namespace FindInFile.Wpf.ViewModels
         {
             get { return m_StatusBarTextColor; }
             set { m_StatusBarTextColor = value; NotifyPropertyChanged(); }
+        }
+
+        public bool QueryProvided
+        {
+            get { return m_QueryProvided; }
+            set { m_QueryProvided = value; NotifyPropertyChanged(); }
+        }
+
+        public ICommand OpenFileCommand
+        {
+            get { return m_OpenFileCommand; }
+            set { m_OpenFileCommand = value; }
         }
         #endregion
 
@@ -166,17 +190,19 @@ namespace FindInFile.Wpf.ViewModels
         public void Initialize()
         {
 #if DEBUG
-            QueryText = DEFAULT_QUERY;
-            RootPathText = DEFAULT_ROOT_PATH;
-            FilterText = DEFAULT_FILTER;
-            RecursiveChecked = true;
-            FuzzySearchChecked = true;
-            StatusBarText = "Place Holder Text...";
-            StatusBarTextColor = "Green";
+            //QueryText = DEFAULT_QUERY;
+            //RootPathText = DEFAULT_ROOT_PATH;
+            //FilterText = DEFAULT_FILTER;
+            //RecursiveChecked = true;
+            //FuzzySearchChecked = true;
+            //StatusBarText = "Place Holder Text...";
+            //StatusBarTextColor = "Green";
 #endif
             FindClicked = new FindCommand(this);
-            BrowseClick = new BrowseCommand(this);
-            AdvancedClick = new RelayCommand(RetrieveExtensions);
+            BrowseClicked = new BrowseCommand(this);
+            AdvancedClicked = new RelayCommand(RetrieveExtensions);
+            OpenFileCommand = new RelayCommand(OpenFile);
+
 
             m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
         }
@@ -205,6 +231,21 @@ namespace FindInFile.Wpf.ViewModels
             fileExtensionDialog.ShowDialog();
         }
 
+        private void OpenFile(object parameter)
+        {
+            try
+            {
+                var match = parameter as SearchMatch;
+
+                if (!string.IsNullOrEmpty(match?.Path))
+                    System.Diagnostics.Process.Start(match.Path);
+            }
+            catch
+            {
+                // Handle this
+            }
+        }
+
         private void MergeFiltersFromMessage(List<ExtensionCellItem> extensionsToMerge)
         {
             HashSet<string> extensions = new HashSet<string>();
@@ -223,10 +264,11 @@ namespace FindInFile.Wpf.ViewModels
                 sb.Append(", ");
             }
 
-            //Remove last ", "
-            sb?.Remove(sb.Length - 2, 2);
-
-            FilterText = sb.ToString();
+            if (sb != null)
+            {
+                sb.Remove(sb.Length - 2, 2); //Remove last ", "
+                FilterText = sb.ToString();
+            }
         }
     }
 }

@@ -10,11 +10,11 @@ none
 false
 TRACE
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\App.xaml
-4-94588063
+4-118997310
 
-26-1214393740
-821570790044
-MainWindow.xaml;Shell.xaml;Views\FileExtensionDialog.xaml;Views\FindTextView.xaml;
+26-1800967996
+85-87448024
+MainWindow.xaml;Views\FileExtensionDialogView.xaml;Views\FindTextView.xaml;Views\SettingsView.xaml;
 
 False
 
