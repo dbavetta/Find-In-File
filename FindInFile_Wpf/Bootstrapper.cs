@@ -10,7 +10,8 @@ namespace FindInFile.Wpf
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<Shell>();
+            //return Container.Resolve<Shell>(); //Deleted shell.xaml
+            return null;
         }
 
         protected override void InitializeShell()

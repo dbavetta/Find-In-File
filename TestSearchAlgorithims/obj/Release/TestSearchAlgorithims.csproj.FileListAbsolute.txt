@@ -1,0 +1,8 @@
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\bin\Release\TestSearchAlgorithims.exe.config
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\bin\Release\TestSearchAlgorithims.exe
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\bin\Release\TestSearchAlgorithims.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Release\TestSearchAlgorithims.csprojResolveAssemblyReference.cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Release\TestSearchAlgorithims.Properties.Resources.resources
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Release\TestSearchAlgorithims.csproj.GenerateResource.Cache
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Release\TestSearchAlgorithims.exe
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Release\TestSearchAlgorithims.pdb

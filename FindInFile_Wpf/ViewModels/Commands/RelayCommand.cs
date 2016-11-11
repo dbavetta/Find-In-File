@@ -47,7 +47,7 @@ namespace FindInFile.Wpf.ViewModels.Commands
             return m_CanExecute.Invoke(parameter);
         }
 
-        public void Execute(object parameter)
+        public void Execute(object parameter = null)
         {
             m_Execute.Invoke(parameter);
         }
