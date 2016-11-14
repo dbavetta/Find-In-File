@@ -151,13 +151,13 @@
                 <DockPanel>
                     <TextBox x:Name="queryTextBox" Height="25" Text="{Binding QueryText, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,20">
+                <StackPanel Orientation="Horizontal" Margin="0,15">
                     <Button x:Name="findButton" 
                             Command="{Binding FindClicked}" 
                             BorderBrush="#FF2E43B9" BorderThickness="2"
                             Height="56"
                             IsEnabled="{Binding QueryProvided}">
-                        <TextBlock Text="FIND" Margin="15,5" FontWeight="Bold" Foreground="White" FontSize="18"/>
+                        <TextBlock Text="Find" Margin="15,5" FontWeight="Bold" Foreground="White" FontSize="18"/>
                     </Button>
                     <!-- Search Options CheckBox Grid-->
                     <Grid>
@@ -210,9 +210,9 @@
                         CommandParameter="{Binding SelectedItem, ElementName=matchesDataGrid}" />
                 </DataGrid.InputBindings>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="File Path" Binding="{Binding ShortenedPath, Mode=OneWay}" />
-                    <DataGridTextColumn Header="Line Number" Binding="{Binding LineNumber, Mode=OneWay}"  />
-                    <DataGridTextColumn Header="Find Results" Binding="{Binding MatchedLine, Mode=OneWay}" />
+                    <DataGridTextColumn Header="File Path" Binding="{Binding ShortenedPath, Mode=OneWay}" Width="auto" />
+                    <DataGridTextColumn Header="Line Number" Binding="{Binding LineNumber, Mode=OneWay}" Width="auto" />
+                    <DataGridTextColumn Header="Find Results" Binding="{Binding MatchedLine, Mode=OneWay}" Width="auto" />
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

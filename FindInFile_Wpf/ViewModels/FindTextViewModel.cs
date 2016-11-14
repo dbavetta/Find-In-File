@@ -12,8 +12,6 @@ using FindInFile.Wpf.Utilities;
 using FindInFile.Wpf.ViewModels.Commands;
 using FindInFile.Wpf.Views;
 using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Practices.Unity;
-using Prism.Modularity;
 
 namespace FindInFile.Wpf.ViewModels
 {
@@ -190,19 +188,15 @@ namespace FindInFile.Wpf.ViewModels
         public void Initialize()
         {
 #if DEBUG
-            //QueryText = DEFAULT_QUERY;
-            //RootPathText = DEFAULT_ROOT_PATH;
-            //FilterText = DEFAULT_FILTER;
-            //RecursiveChecked = true;
-            //FuzzySearchChecked = true;
-            //StatusBarText = "Place Holder Text...";
-            //StatusBarTextColor = "Green";
+            QueryText = DEFAULT_QUERY;
+            RootPathText = DEFAULT_ROOT_PATH;
+            FilterText = DEFAULT_FILTER;
+            RecursiveChecked = true;
 #endif
             FindClicked = new FindCommand(this);
             BrowseClicked = new BrowseCommand(this);
             AdvancedClicked = new RelayCommand(RetrieveExtensions);
             OpenFileCommand = new RelayCommand(OpenFile);
-
 
             m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
         }
@@ -214,7 +208,7 @@ namespace FindInFile.Wpf.ViewModels
 
         private void RetrieveExtensions(object parameter)
         {
-            var fileExtensionDialog = new FileExtensionDialog(); //Convert to idisposable so it can be places in a using block
+            var fileExtensionDialog = new FileExtensionDialog(); //TODO: Convert to idisposable so it can be places in a using block
             //fileExtensionDialog.Owner = this;
 
             Messenger.Default.Register<ReturnExtensionsMessage>(this, m_AuthToken, (message) => 
@@ -248,7 +242,7 @@ namespace FindInFile.Wpf.ViewModels
 
         private void MergeFiltersFromMessage(List<ExtensionCellItem> extensionsToMerge)
         {
-            HashSet<string> extensions = new HashSet<string>();
+            HashSet<string> extensions = null;
             if (!string.IsNullOrEmpty(m_FilterText))
             {
                 string[] currentExtensions = m_FilterText.Replace(" ", "").Replace("*", "").Split(',');
@@ -266,7 +260,7 @@ namespace FindInFile.Wpf.ViewModels
 
             if (sb != null)
             {
-                sb.Remove(sb.Length - 2, 2); //Remove last ", "
+                sb.Remove(sb.Length - 2, 2); //Removes last ", "
                 FilterText = sb.ToString();
             }
         }

@@ -17,6 +17,7 @@
         public string ShortenedPath
         {
             get { return m_ShortenedPath; }
+            set { m_ShortenedPath = value; }
         }
         public int LineNumber
         {

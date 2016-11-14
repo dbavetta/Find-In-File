@@ -107,9 +107,7 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\FindInFi
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\FindInFile_Wpf.Properties.Resources.resources
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\FindInFile.Wpf.Desktop.csproj.GenerateResource.Cache
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\FileExtensionDialogView.g.cs
-C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsView.g.cs
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\FileExtensionDialogView.baml
-C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsView.baml
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\Dragablz.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\MaterialDesignColors.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\MaterialDesignThemes.Wpf.dll
@@ -117,3 +115,5 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\Dragablz
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\Dragablz.xml
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\MaterialDesignThemes.Wpf.xml
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsDialogView.g.cs
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsDialogView.baml

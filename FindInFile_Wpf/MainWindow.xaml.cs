@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Windows;
 using System.Windows.Controls;
 using FindInFile.Models;
 using FindInFile.Wpf.Utilities;
@@ -18,10 +19,20 @@ namespace FindInFile.Wpf
 
         private void TabControlSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TabControl tabControl = sender as TabControl;
-            var tab = tabControl.SelectedItem as TabObject<FindTextViewModel>;
-            TabManager<FindTextViewModel>.Instance.SwitchToTab(tab);
-            tabControl.SelectedItem = TabManager<FindTextViewModel>.Instance.ActiveTab;
+            var tabControl = sender as TabControl;
+            var tab = tabControl?.SelectedItem as TabObject<FindTextViewModel>;
+
+            if (tab != null)
+            {
+                TabManager<FindTextViewModel>.Instance.SwitchToTab(tab);
+                tabControl.SelectedItem = TabManager<FindTextViewModel>.Instance.ActiveTab;
+            }
+        }
+
+        private void RestartApplication()
+        {
+            System.Windows.Forms.Application.Restart();
+            Application.Current.Shutdown();
         }
     }
 }
