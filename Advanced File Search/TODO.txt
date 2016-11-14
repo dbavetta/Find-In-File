@@ -9,11 +9,11 @@
 [ ] | Implement multi directory search (entirely different/unrelated folders)
 [ ] | date filter?
 [ ] | Account for read file permissions
-[ ] | IMPLEMENT .Net tasking so the UI doesnt hang while waiting for results to be returned (mainly when useing full wild card search *.* )
+[~] | IMPLEMENT .Net tasking so the UI doesnt hang while waiting for results to be returned (mainly when useing full wild card search *.* )
 [ ] | Collapse group boxes 
 [ ] | Dropdown textboxs with history
 [ ] | Encrypt saved data (store as json)
-[ ] | 
+[ ] | Fix datagrid autosizing bug (doesnt resize when going from absolute to relative filepaths)
 [ ] | 
 [ ] | 
 [ ] | 
@@ -37,3 +37,9 @@ http://cc.davelozinski.com/c-sharp/fastest-way-to-check-if-a-string-occurs-withi
 Long Paths
 https://gallery.technet.microsoft.com/DelimonWin32IO-Library-V40-7ff6b16c
 https://github.com/UweKeim/ZetaLongPaths/blob/master/Source/RuntimeNetCore/ZlpPathHelper.cs
+
+
+Settings
+
+	short paths
+	clear history

@@ -125,7 +125,7 @@ namespace SearchAggregatorUtility
             {
                 //.Select((text, index) => new SearchMatch(filePath, filePath.Replace(m_RootPath, "..."), index + 1, searchQuery, text.Trim()))
                 return File.ReadLines(filePath)
-                    .Select((text, index) => new SearchMatch(filePath, filePath, index + 1, searchQuery,  text.Trim()))
+                    .Select((text, index) => new SearchMatch(filePath.Trim(), filePath.Trim(), index + 1, searchQuery.Trim(),  text.Trim()))
                           .Where(line =>
                               matchCase ?
                                 SmartRegex.IsMatch(line.MatchedLine, @"(^|\s)" + searchQuery + @"(\s|$)") :
@@ -135,7 +135,7 @@ namespace SearchAggregatorUtility
             {
                 //.Select((text, index) => new SearchMatch(filePath, filePath.Replace(m_RootPath, "..."), index + 1, searchQuery, text.Trim()))
                 return File.ReadLines(filePath)
-                    .Select((text, index) => new SearchMatch(filePath, filePath, index + 1, searchQuery, text.Trim()))
+                    .Select((text, index) => new SearchMatch(filePath.Trim(), filePath.Trim(), index + 1, searchQuery.Trim(), text.Trim()))
                               .Where(line =>
                                   matchCase ?
                                     line.MatchedLine.Contains(searchQuery) :

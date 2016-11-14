@@ -34,7 +34,7 @@ namespace FindInFile.Wpf.Utilities
 
         public void Initialize()
         {
-            BuildDefaultState();
+            InitializeDefaultState();
         }
 
         public TabObject<ViewModel> ActiveTab
@@ -86,13 +86,13 @@ namespace FindInFile.Wpf.Utilities
             return m_TabTokenAssociation[m_ActiveTab.Index];
         }
 
-        private void BuildDefaultState()
+        private void InitializeDefaultState()
         {
             m_ViewModelCollection = new ObservableCollection<TabObject<ViewModel>>();
             m_TabTokenAssociation = new Dictionary<int, Guid>();
 
             var baseTab = CreateNewTabObject();
-            var plusTab = CreateNewTabObject("+");
+            var plusTab = CreateNewTabObject("  +  ");
 
             m_ViewModelCollection.Add(baseTab);
             m_ViewModelCollection.Add(plusTab);
@@ -112,7 +112,7 @@ namespace FindInFile.Wpf.Utilities
 
             return new TabObject<ViewModel>()
             {
-                Header = header != null ? header : TAB_HEADER,
+                Header = header != null ? header : TAB_HEADER + " (" + (TabCount() + 1) + ")",
                 Index = TabCount(),
                 Content = viewModel
             };

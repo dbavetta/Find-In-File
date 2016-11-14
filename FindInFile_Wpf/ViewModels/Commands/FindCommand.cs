@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using FindInFile.Models;
 using SearchAggregatorUtility;
@@ -11,6 +11,14 @@ namespace FindInFile.Wpf.ViewModels.Commands
     class FindCommand : BaseCommand
     {
         private FindTextViewModel m_FindTextViewModel;
+        private bool UseRelativeFilePaths
+        {
+            get
+            {
+                bool result; bool.TryParse(ConfigurationManager.AppSettings.Get("DisplayRelativeFilePaths"), out result);
+                return result;
+            }
+        }
 
         public FindCommand(FindTextViewModel viewModel)
         {
@@ -35,6 +43,11 @@ namespace FindInFile.Wpf.ViewModels.Commands
                 var searchAggregator = new SearchAggregator(query, fuzzySearch, matchCase, copyToClipboard);
                 var filepaths = DirectoryExplorer.GetFilePaths(rootPath, recursive, extensionFilter).ToList();
                 var matches = await searchAggregator.SearchFileSetAsync(filepaths);
+
+                if (UseRelativeFilePaths)
+                    foreach (var m in matches)
+                        m.ShortenedPath = m.ShortenedPath.Replace(rootPath, "..");
+
                 m_FindTextViewModel.MatchList = new ObservableCollection<SearchMatch>(matches);
             }
             catch (DirectoryNotFoundException)
