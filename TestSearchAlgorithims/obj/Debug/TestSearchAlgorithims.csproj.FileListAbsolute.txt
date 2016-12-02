@@ -13,3 +13,4 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Debug\T
 C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.csproj.GenerateResource.Cache
 C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.exe
 C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\TestSearchAlgorithims\obj\Debug\TestSearchAlgorithims.csprojResolveAssemblyReference.cache

@@ -16,14 +16,30 @@ namespace FindInFile.Wpf.ViewModels
 {
     public class FileExtensionDialogViewModel : INotifyPropertyChanged, IViewModel
     {
+        public class CheckAllExtensionButtonText
+        {
+            public const string INACTIVE = "";
+            public const string CHECK_ALL = "Check All";
+            public const string UNCHECK_ALL = "Uncheck All";
+        }
+
+        private enum ExtensionSelectionActivity
+        {
+            CHECK_ALL,
+            UNCHECK_ALL
+        }
+
         public int ColumnCount = 8;
 
         #region Private Properties
         private List<ExtensionCellItem> m_ExtensionGrid;
+        private ExtensionSelectionActivity m_ExtensionSelectionActivity;
+        private string m_ExtensionStateText;
         private string m_FolderPath;
         private bool m_RecursiveChecked;
         private bool m_hasReturnItems;
         private ICommand m_RetrieveExtentionsCommand;
+        private ICommand m_ExtensionSelectionChangedCommand;
         private ICommand m_OkayCommand;
         private ICommand m_CancelCommand;
         private Guid m_AuthToken;
@@ -36,6 +52,12 @@ namespace FindInFile.Wpf.ViewModels
         {
             get { return m_ExtensionGrid; }
             set { m_ExtensionGrid = value; NotifyPropertyChanged(); }
+        }
+
+        public string ExtensionStateText
+        {
+            get { return m_ExtensionStateText; }
+            set { m_ExtensionStateText = value; NotifyPropertyChanged(); }
         }
 
         public string FolderPath
@@ -61,6 +83,13 @@ namespace FindInFile.Wpf.ViewModels
             get { return m_RetrieveExtentionsCommand; }
             set { m_RetrieveExtentionsCommand = value; }
         }
+
+        public ICommand ExtensionSelectionChangedCommand
+        {
+            get { return m_ExtensionSelectionChangedCommand; }
+            set { m_ExtensionSelectionChangedCommand = value; }
+        }
+
         public ICommand OkayCommand
         {
             get { return m_OkayCommand; }
@@ -77,6 +106,8 @@ namespace FindInFile.Wpf.ViewModels
         public FileExtensionDialogViewModel()
         {
             Initialize();
+            ExtensionGrid = new List<ExtensionCellItem>();
+            ExtensionStateText = CheckAllExtensionButtonText.INACTIVE;
         }
 
         public void Initialize()
@@ -84,6 +115,7 @@ namespace FindInFile.Wpf.ViewModels
             m_AuthToken = TabManager<FindTextViewModel>.Instance.ResolveActiveTabToken();
 
             RetrieveExtensionCommand = new RelayCommand(RetrieveExtensions);
+            ExtensionSelectionChangedCommand = new RelayCommand(ExtensionSelectionChanged);
             OkayCommand = new RelayCommand(ReturnResultsToViewModel);
             CancelCommand = new RelayCommand(CloseDialog);
 
@@ -92,6 +124,11 @@ namespace FindInFile.Wpf.ViewModels
                 RecursiveChecked = message.RecursiveChecked;
                 Messenger.Default.Unregister<FileExtensionDialogInitializationMessage>(this); //One time message
             });
+        }
+
+        private void CallNotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -105,15 +142,37 @@ namespace FindInFile.Wpf.ViewModels
 
             var extensions = DirectoryExplorer.GetExtensions(m_FolderPath, m_RecursiveChecked).GroupBy(ext => ext).OrderByDescending(ext => ext.Count());
 
-            if (extensions != null && extensions.Count() > 0)
+            if (extensions != null && extensions.Any())
             {
                 foreach (var extension in extensions)
-                {
                     dataGrid.Add(new ExtensionCellItem(extension.Key, extension.Count()));
-                }
 
                 ExtensionGrid = dataGrid;
                 HasReturnItems = true;
+
+                ExtensionStateText = CheckAllExtensionButtonText.CHECK_ALL;
+                m_ExtensionSelectionActivity = ExtensionSelectionActivity.CHECK_ALL;
+            }
+        }
+
+        private void ExtensionSelectionChanged(object parameter)
+        {
+            if (ExtensionGrid.Any())
+            {
+                if (m_ExtensionSelectionActivity == ExtensionSelectionActivity.CHECK_ALL)
+                {
+                    m_ExtensionSelectionActivity = ExtensionSelectionActivity.UNCHECK_ALL;
+                    ExtensionStateText = CheckAllExtensionButtonText.UNCHECK_ALL;
+                    ExtensionGrid.ForEach(ext => ext.Include = true);
+                    ExtensionGrid = ExtensionGrid.Select(ext => ext).ToList();
+                }
+                else
+                {
+                    m_ExtensionSelectionActivity = ExtensionSelectionActivity.CHECK_ALL;
+                    ExtensionStateText = CheckAllExtensionButtonText.CHECK_ALL;
+                    ExtensionGrid.ForEach(ext => ext.Include = false);
+                    ExtensionGrid = ExtensionGrid.Select(ext => ext).ToList();
+                }
             }
         }
 
@@ -136,7 +195,7 @@ namespace FindInFile.Wpf.ViewModels
             {
                 IClosable window = parameter as IClosable;
                 window.Close();
-            }  
+            }
         }
     }
 }

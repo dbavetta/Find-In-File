@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
 using FindInFile.Models;
+using Alphaleonis.Win32.Filesystem;
 
 namespace SearchAggregatorUtility
 {
@@ -16,11 +16,6 @@ namespace SearchAggregatorUtility
         private readonly bool m_FuzzySearch;
         private readonly bool m_matchCase;
         private readonly bool m_CopyToClipboard;
-
-        //TODO: Move to application settings when implemented
-        //private bool m_ShowShortenedPaths = true;
-        //private string m_RootPath;
-        //END
 
         private ConcurrentBag<SearchMatch> m_MatchList;
         private List<string> m_FilesToSearch;
@@ -45,7 +40,10 @@ namespace SearchAggregatorUtility
 
             await Task.Run(() =>
             {
-                m_FilesToSearch.ForEach(currentFile => SearchFile(currentFile));
+                m_FilesToSearch.AsParallel().ForAll(currentFilePath => {
+                    SearchFile(currentFilePath);
+                });
+                //m_FilesToSearch.ForEach(currentFile => SearchFile(currentFile));
             });
 
             return m_MatchList.ToList();
@@ -59,8 +57,7 @@ namespace SearchAggregatorUtility
             if (!m_MatchList.IsEmpty)
                 m_MatchList = new ConcurrentBag<SearchMatch>();
 
-            m_FilesToSearch.AsParallel().ForAll(currentFilePath =>
-            {
+            m_FilesToSearch.AsParallel().ForAll(currentFilePath => {
                 SearchFile(currentFilePath);
             });
 
@@ -78,10 +75,9 @@ namespace SearchAggregatorUtility
             List<SearchMatch> matches = new List<SearchMatch>();
             await Task.Run(() => { matches = FindMatchesInFile(filePath, m_Query, m_FuzzySearch, m_matchCase); });
 
-            if (matches.Count > 0)
+            if (matches.Any())
             {
-                foreach (var match in matches)
-                    m_MatchList.Add(match);
+                matches.ForEach(match => m_MatchList.Add(match));
 
                 // Copy searched for text to system clipboard
                 //if (m_CopyToClipboard)
@@ -101,10 +97,9 @@ namespace SearchAggregatorUtility
 
             List<SearchMatch> matches = FindMatchesInFile(filePath, m_Query, m_FuzzySearch, m_matchCase);
 
-            if (matches.Count > 0)
+            if (matches.Any())
             {
-                foreach (var match in matches)
-                    m_MatchList.Add(match);
+                matches.ForEach(match => m_MatchList.Add(match));
 
                 // Copy searched for text to system clipboard
                 //if (m_CopyToClipboard)
@@ -116,7 +111,7 @@ namespace SearchAggregatorUtility
 
         public int GetFileCount()
         {
-            return m_FilesToSearch != null ? m_FilesToSearch.Count() : 0;
+            return m_FilesToSearch?.Count() ?? 0;
         }
 
         private List<SearchMatch> FindMatchesInFile(string filePath, string searchQuery, bool fuzzySearch, bool matchCase)
@@ -124,17 +119,17 @@ namespace SearchAggregatorUtility
             if (!fuzzySearch)
             {
                 //.Select((text, index) => new SearchMatch(filePath, filePath.Replace(m_RootPath, "..."), index + 1, searchQuery, text.Trim()))
-                return File.ReadLines(filePath)
+                return Alphaleonis.Win32.Filesystem.File.ReadLines(filePath)
                     .Select((text, index) => new SearchMatch(filePath.Trim(), filePath.Trim(), index + 1, searchQuery.Trim(),  text.Trim()))
                           .Where(line =>
                               matchCase ?
-                                SmartRegex.IsMatch(line.MatchedLine, @"(^|\s)" + searchQuery + @"(\s|$)") :
-                                SmartRegex.IsMatch(line.MatchedLine, @"(^|\s)" + searchQuery + @"(\s|$)", RegexOptions.IgnoreCase)).ToList();
+                                Regex.IsMatch(line.MatchedLine, @"(^|\s)" + searchQuery + @"(\s|$)") :
+                                Regex.IsMatch(line.MatchedLine, @"(^|\s)" + searchQuery + @"(\s|$)", RegexOptions.IgnoreCase)).ToList();
             }
             else
             {
                 //.Select((text, index) => new SearchMatch(filePath, filePath.Replace(m_RootPath, "..."), index + 1, searchQuery, text.Trim()))
-                return File.ReadLines(filePath)
+                return Alphaleonis.Win32.Filesystem.File.ReadLines(filePath)
                     .Select((text, index) => new SearchMatch(filePath.Trim(), filePath.Trim(), index + 1, searchQuery.Trim(), text.Trim()))
                               .Where(line =>
                                   matchCase ?
