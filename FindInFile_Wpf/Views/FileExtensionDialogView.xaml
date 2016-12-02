@@ -1,4 +1,4 @@
-﻿<Window x:Name="RetrieveExtensions" x:Class="FindInFile.Wpf.Views.FileExtensionDialog"
+﻿<Window x:Name="FileExtensionDialogWindow" x:Class="FindInFile.Wpf.Views.FileExtensionDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +12,7 @@
     <Window.Resources>
         <viewModels:FileExtensionDialogViewModel x:Key="FilterExtensionViewModel"/>
     </Window.Resources>
-    <GroupBox Header="Root Path" Margin="10">
+    <GroupBox Header="Root Path" Margin="10" DataContext="{Binding Source={StaticResource FilterExtensionViewModel}}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="AUTO"/>
@@ -20,27 +20,33 @@
                 <RowDefinition Height="AUTO"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical">
-                <TextBox Name="FolderPathTextBox" Margin="0, 0, 0, 5" Text="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}"/>
+                <TextBox Name="FolderPathTextBox" Margin="0, 0, 0, 5" Text="{Binding FolderPath}"/>
                 <StackPanel Orientation="Horizontal" Margin="0, 0, 5, 0">
-                    <Button Command="{Binding RetrieveExtensionCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding FolderPath, Source={StaticResource FilterExtensionViewModel}}">
+                    <Button Command="{Binding RetrieveExtensionCommand}" CommandParameter="{Binding FolderPath}">
                         <TextBlock Text="Retrieve all file extension types in directory" Margin="2,0"/>
                     </Button>
-                    <CheckBox Content="Recursive" IsChecked="{Binding RecursiveChecked, Source={StaticResource FilterExtensionViewModel}}" Margin="5"/>
+                    <CheckBox Content="Recursive" IsChecked="{Binding RecursiveChecked, Mode=TwoWay}" Margin="5"/>
                 </StackPanel>
             </StackPanel>
             <!--Update Binding matrix-->
             <DockPanel Grid.Row="1" Margin="0,15">
-                <TextBlock DockPanel.Dock="Top" Text="Extension Types:" FontWeight="Bold"/>
-                <DataGrid GridLinesVisibility="None" MinHeight="50" ItemsSource="{Binding ExtensionGrid, Source={StaticResource FilterExtensionViewModel}}"/>
+                <StackPanel Orientation="Vertical" DockPanel.Dock="Top">
+                    <!--<TextBlock DockPanel.Dock="Top" Text="Extension Types:" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Height="23" FontSize="12" Foreground="#FF3C3C3C" Command="{Binding ExtensionSelectionChangedCommand}">
+                        <TextBlock Text="{Binding ExtensionStateText}"/>
+                    </Button>
+                </StackPanel>
+
+                <DataGrid GridLinesVisibility="None" MinHeight="50" ItemsSource="{Binding ExtensionGrid,  Mode=TwoWay}"/>
             </DockPanel>
             <StackPanel Grid.Row="2" 
                     Orientation="Horizontal" 
                     HorizontalAlignment="Right" 
                     Margin="0,5">
-                <Button Name="OkButton" Margin="5,0" Command="{Binding OkayCommand, Source={StaticResource FilterExtensionViewModel}}" CommandParameter="{Binding ElementName=window, Mode=OneWay}" IsEnabled="{Binding HasReturnItems, Source={StaticResource FilterExtensionViewModel}}">
+                <Button Name="OkButton" Margin="5,0" Command="{Binding OkayCommand}" CommandParameter="{Binding ElementName=FileExtensionDialog, Mode=OneWay}" IsEnabled="{Binding HasReturnItems}">
                     <TextBlock Text="Ok" Margin="15,0"/>
                 </Button>
-                <Button Name="CancelButton" CommandParameter="{Binding ElementName=window, Mode=OneWay}" Command="{Binding CancelCommand, Source={StaticResource FilterExtensionViewModel}}">
+                <Button Name="CancelButton" CommandParameter="{Binding ElementName=FileExtensionDialog, Mode=OneWay}" Command="{Binding CancelCommand}" >
                     <TextBlock Text="Cancel" Margin="5,0"/>
                 </Button>
             </StackPanel>

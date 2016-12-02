@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using Alphaleonis.Win32.Filesystem;
 
 namespace SearchAggregatorUtility
 {
@@ -8,7 +8,7 @@ namespace SearchAggregatorUtility
     {
         public static IEnumerable<string> GetFilePaths(string rootPath, bool recursive = false, string extensionFilter = "*.*")
         {
-            SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            System.IO.SearchOption searchOption = recursive ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
             SmartRegex filter = new SmartRegex(extensionFilter);
             return Directory.EnumerateFiles(rootPath, "*", searchOption).
                     Where(filePath => filter.IsMatch(Path.GetExtension(filePath)));

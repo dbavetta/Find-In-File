@@ -14,3 +14,6 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\FindIn
 C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregatorUtility.csprojResolveAssemblyReference.cache
 C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregator.dll
 C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\obj\Debug\SearchAggregator.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\AlphaFS.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\AlphaFS.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\SearchAggregator\bin\Debug\AlphaFS.xml

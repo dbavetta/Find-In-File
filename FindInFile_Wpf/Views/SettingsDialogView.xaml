@@ -11,16 +11,19 @@
              TextElement.FontSize="13"
              FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Width="400" Height="300" 
+             WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <viewModels:SettingsViewModel x:Key="settingsViewModel"/>
     </Window.Resources>
-    <Grid Background="White">
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Display Relative File Paths" Background="White" />
-                <ToggleButton Name="RelativeFilePathsToggle" Margin="5,0" IsChecked="{Binding DisplayRelativeFilePaths, Source={StaticResource settingsViewModel}}" />
+    <Grid Background="White" Margin="5">
+        <GroupBox Header="Settings">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Display Relative File Paths" Background="White" />
+                    <ToggleButton Name="RelativeFilePathsToggle" Margin="5,0" IsChecked="{Binding DisplayRelativeFilePaths, Source={StaticResource settingsViewModel}}" />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </GroupBox>
     </Grid>
 </Window>

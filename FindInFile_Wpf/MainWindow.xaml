@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
         xmlns:utilities="clr-namespace:FindInFile.Wpf.Utilities"
         xmlns:views="clr-namespace:FindInFile.Wpf.Views"
-        xmlns:dragablez="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:dz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
@@ -22,40 +22,37 @@
         <viewModels:MainWindowViewModel x:Key="mainWindowViewModel"/>
         <viewModels:FindTextViewModel x:Key="findTextViewModel"/>
     </Window.Resources>
-    <!--<dragablez:TabablzControl ItemsSource="{Binding ViewModelCollection, Source={StaticResource mainWindowViewModel}}" SelectionChanged="TabControlSelectionChanged">
-        <dragablez:TabablzControl.InterTabController>
-            <dragablez:InterTabController/>
-        </dragablez:TabablzControl.InterTabController>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="TabSelectionChanged">
-                <cmd:EventToCommand Command="{Binding TabSelectionChangedCommand}" PassEventArgsToCommand="True" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-        <dragablez:TabablzControl.ItemTemplate>
-            <DataTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Header}" />
-                    <Button Margin="5,0">
-                        <TextBlock Text="x" Margin="2,0"/>
-                    </Button>
-                </StackPanel>
-            </DataTemplate>
-        </dragablez:TabablzControl.ItemTemplate>
-        <dragablez:TabablzControl.ContentTemplate>
-            <DataTemplate DataType="{x:Type viewModels:FindTextViewModel}">
-                <views:FindTextView DataContext="{Binding Content}"/>
-            </DataTemplate>
-        </dragablez:TabablzControl.ContentTemplate>
-    </dragablez:TabablzControl>-->
     <DockPanel DataContext="{Binding Source={StaticResource mainWindowViewModel}}">
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
+        <Menu DockPanel.Dock="Top" Height="25">
+            <MenuItem Header="File" Margin="0" Height="25">
                 <MenuItem Header="Open"/>
                 <MenuItem Header="Close"/>
                 <MenuItem Header="Save"/>
                 <MenuItem Header="Settings" Command="{Binding SettingsClicked}"/>
             </MenuItem>
         </Menu>
+        <!--<dz:TabablzControl ItemsSource="{Binding ViewModelCollection}" SelectionChanged="TabControlSelectionChanged">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TabSelectionChanged">
+                    <cmd:EventToCommand Command="{Binding TabSelectionChangedCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>                                                                                            
+            </i:Interaction.Triggers>
+            <dz:TabablzControl.InterTabController>
+                <dz:InterTabController />
+            </dz:TabablzControl.InterTabController>
+            <dz:TabablzControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Header}" />
+                    </StackPanel>
+                </DataTemplate>
+            </dz:TabablzControl.ItemTemplate>
+            <dz:TabablzControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type viewModels:FindTextViewModel}">
+                    <views:FindTextView DataContext="{Binding Content}"/>
+                </DataTemplate>
+            </dz:TabablzControl.ContentTemplate>
+        </dz:TabablzControl>-->
         <TabControl ItemsSource="{Binding ViewModelCollection}" SelectionChanged="TabControlSelectionChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TabSelectionChanged">
@@ -67,8 +64,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Header}" />
                         <!--<Button FontSize="6" Width="10" Height="10" Background="White">
-                        <TextBlock Text="x"/>
-                    </Button>-->
+                            <TextBlock Text="x"/>
+                        </Button>-->
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>

@@ -117,3 +117,6 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\Material
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\MaterialDesignThemes.Wpf.xml
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsDialogView.g.cs
 C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\obj\Debug\Views\SettingsDialogView.baml
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\AlphaFS.dll
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\AlphaFS.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\FindInFile_Wpf\bin\Debug\AlphaFS.xml

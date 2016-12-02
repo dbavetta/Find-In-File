@@ -17,3 +17,4 @@ C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Debug\Ad
 C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Debug\FindInFile.csproj.GenerateResource.Cache
 C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Debug\Advanced File Search.exe
 C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Debug\Advanced File Search.pdb
+C:\Users\D760026\Documents\GitHub\Find-In-File\Advanced File Search\obj\Debug\FindInFile.csprojResolveAssemblyReference.cache

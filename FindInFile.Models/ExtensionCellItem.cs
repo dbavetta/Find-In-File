@@ -22,7 +22,7 @@
             get { return m_ExtensionCount; }
         }
 
-        public ExtensionCellItem(string text, int extensionCount, bool isChecked = true)
+        public ExtensionCellItem(string text, int extensionCount, bool isChecked = false)
         {
             m_included = isChecked;
             m_Extension = text;

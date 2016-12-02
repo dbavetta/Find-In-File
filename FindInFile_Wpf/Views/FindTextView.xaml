@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FindInFile.Wpf.Views"
              xmlns:viewModels="clr-namespace:FindInFile.Wpf.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              Background="#FFFAFAFA"
              TextElement.FontWeight="Regular"
@@ -13,7 +14,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1000" OpacityMask="White">
     <UserControl.Resources>
+        
         <viewModels:FindTextViewModel x:Key="findTextViewModel"/>
+        
         <!--http://stackoverflow.com/questions/6359848/wpf-loading-spinner-->
         <Color x:Key="FilledColor" A="255" B="155" R="155" G="155"/>
         <Color x:Key="UnfilledColor" A="0" B="155" R="155" G="155"/>
@@ -139,12 +142,17 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="160"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <!--<materialDesign:DialogHost>
+            <materialDesign:DialogHost.DialogContent>
+                <local:FileExtensionDialog />
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>-->
         <!-- Find group -->
         <GroupBox Header="Find What:" Margin="5,5,2.5,5">
             <StackPanel Orientation="Vertical" Margin="5">
@@ -218,7 +226,7 @@
         </DockPanel>
         <!-- Status Bar -->
         <DockPanel x:Name="statusBarDockPanel" Grid.Row="2" Grid.ColumnSpan="2">
-            <StatusBar DockPanel.Dock="Bottom" Background="#263F51B5" >
+            <StatusBar DockPanel.Dock="Bottom" Background="#263F51B5">
                 <TextBlock Name="statusBarTextBlock" Text="{Binding StatusBarText}" Margin="5,0" Foreground="{Binding StatusBarTextColor}"/>
             </StatusBar>
         </DockPanel>
